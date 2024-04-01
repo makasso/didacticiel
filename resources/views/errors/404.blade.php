@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ env('APP_NAME') }} | @yield('title')</title>
+    <title>{{ env('APP_NAME') }} | Erreur 404</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
@@ -12,11 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/backend.css?v=1.0.0') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/remixicon/fonts/remixicon.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/vendor/tui-calendar/tui-calendar/dist/tui-calendar.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/tui-calendar/tui-date-picker/dist/tui-date-picker.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css') }}">
-
+</head>
 <body class=" ">
     <!-- loader Start -->
     <div id="loading">
@@ -30,7 +26,7 @@
             <div class="row no-gutters height-self-center">
                 <div class="col-sm-12 text-center align-self-center">
                     <div class="iq-error position-relative">
-                        <img src="../assets/images/error/404.png" class="img-fluid iq-error-img" alt="">
+                        <img src="{{asset('assets/images/error/404.png')}}" class="img-fluid iq-error-img" alt="">
                         <h2 class="mb-0 mt-4">Oops! Page introuvable.</h2>
                         <p>La page demandée n'existe pas.</p>
                         <a class="btn btn-primary d-inline-flex align-items-center mt-3" href="{{ url('/') }}"><i

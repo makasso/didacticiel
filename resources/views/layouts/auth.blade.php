@@ -18,19 +18,12 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css') }}">
 
 <body class=" ">
-    <!-- loader Start -->
-    <div id="loading">
-        <div id="loading-center">
-        </div>
-    </div>
-    <!-- loader END -->
-
     <div class="wrapper" style="background: url('{{ asset('assets/images/login/sign-bg.jpg') }}'); background-position: right; background-size: cover;">
         <section class="login-content overflow-hidden">
             <div class="container">
                 <div class="row align-items-center justify-content-center height-self-center">
                     <div class="col-lg-8">
-                        <div class="card auth-card">
+                        <div class="card auth-card" style="z-index: 0;">
                             <div class="card-body p-0">
                                 <div class="d-flex auth-content">
                                     <div class="col-lg-6 bg-primary content-left">
@@ -48,6 +41,8 @@
             </div>
         </section>
     </div>
+
+    @include('sweetalert::alert')
 
     <!-- Backend Bundle JavaScript -->
     <script src="{{ asset('assets/js/backend-bundle.min.js') }}"></script>

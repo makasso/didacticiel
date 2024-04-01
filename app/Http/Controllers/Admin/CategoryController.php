@@ -13,7 +13,11 @@ class CategoryController extends Controller
     //
     public function index()
     {
-        return view('admin.category.index');
+        $categories = Category::latest()->get();
+        confirmDelete('Supprimer la catégorie?', 'Voulez-vous vraiment supprimer cette catégorie?');
+        return view('admin.category.index', [
+            'categories' => $categories
+        ]);
     }
 
     public function create()
@@ -45,13 +49,12 @@ class CategoryController extends Controller
         $category->status = $request->status == true ? '1': '0';
         $category->save();
 
-        return redirect('admin/category')->with('message', 'Category Added Successfully');
+        return redirect('admin/category')->withToastSuccess('Category Added Successfully');
     }
-
 
     // function update category
     public function edit(Category $category)
-    {
+    {        
         return view('admin.category.edit', compact('category'));
     }
 
@@ -60,10 +63,11 @@ class CategoryController extends Controller
     {
         $validateData = $request->validated();
 
-        $category = Category::findOrFail($category);
+        $category = Category::find($category);
 
         $category->name = $validateData['name'];
         $category->description = $validateData['description'];
+        $category->status = $request->status == 'on' ? '1': '0';
 
         // upload image
         if ($request->hasFile('image')) {
@@ -83,11 +87,20 @@ class CategoryController extends Controller
             $category->image = $uploadPath.$filename;
         }
 
-        $category->status = $request->status == true ? '1': '0';
-        $category->update();
+        $category->save();
 
-        return redirect('admin/category')->with('message', 'Category Update Successfully');
+        return redirect('admin/category')->withToastSuccess('Catégorie modifiée avec succès');
     }
 
+    public function destroy($category) {
+        
+        $category = Category::find($category);
+        $path = 'uploads/category/'.$category->image;
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+        $category->delete($path);
 
+        return redirect('admin/category')->withToastSuccess('Catégorie supprimée avec succès');
+    }
 }

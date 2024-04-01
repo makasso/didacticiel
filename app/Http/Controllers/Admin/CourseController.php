@@ -15,7 +15,11 @@ class CourseController extends Controller
     //
     public function index()
     {
-        return view('admin.course.index');
+        $courses = Course::latest()->get();
+        $users = User::where('role_as', '0')->get();
+
+        confirmDelete('Supprimer le cours?', 'Voulez-vous vraiment supprimer ce cours?');
+        return view('admin.course.index', compact('courses', 'users'));
     }
 
 
@@ -47,26 +51,23 @@ class CourseController extends Controller
         ]);
 
 
-        return redirect('admin/course')->with('message', 'Course Added Succesfully');
-        // return $product->id;
+        return redirect('admin/course')->withToastSuccess('Cours ajouté avec succès');
     }
 
-
-    public function edit(int $course_id)
+    public function edit(Course $course)
     {
         $categories = Category::all();
         $users = User::where('role_as', '0')->get();
-        $course = Course::findOrFail($course_id);
+        $course = Course::find($course);
 
         return view('admin.course.edit', compact('categories', 'course', 'users'));
     }
 
-
-    public function update(CourseFormRequest $request, int $course_id)
+    public function update(CourseFormRequest $request, Course $course)
     {
         $validateData = $request->validated();
 
-        Course::findOrFail($course_id)->update([
+        Course::find($course)->update([
             'category_id' => $validateData['category_id'],
             'user_id' => $validateData['user_id'],
             'name' => $validateData['name'],
@@ -74,31 +75,7 @@ class CourseController extends Controller
             'number_module' => $validateData['number_module'],
         ]);
 
-
         return redirect('admin/course')->with('message', 'Course Update Succesfully');
-        // return $product->id;
-
-        // $course = Category::findOrFail($validateData['category_id'])
-        //             ->coursesCategories()->where('id', $course_id)->first();
-
-        // if ($course)
-        // {
-        //     $course->update([
-        //         'category_id' => $validateData['category_id'],
-        //         'name' => $validateData['name'],
-        //         'duree' => $validateData['duree'],
-        //         'number_module' => $validateData['number_module'],
-        //     ]);
-
-
-        //     return redirect('admin/course')->with('message', 'Course Update Succesfully');
-        //     // return $product->id;
-
-        // }
-        // else {
-        //     return redirect('admin/course')->with('message', 'No Such Course Id Found');
-        // }
-
     }
 
     public function destroy(int $course_id)
@@ -106,8 +83,8 @@ class CourseController extends Controller
         $course = Course::findOrFail($course_id);
 
         $course->delete();
-        return redirect()->back()->with('message', 'Course Deleted Successfuly');
 
+        return redirect()->back()->withToastSuccess('Cours supprimé avec succès');
     }
 
 }

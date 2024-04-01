@@ -14,6 +14,9 @@
                          </div>
                       </div>
                       <div class="card-body">
+                        @if (session('success'))
+                        <div class="alert alert-success alert-dismissible">{{session('success')}}</div>
+                      @endif
                          <form method="POST" action="">
                             @csrf
                             @method('PUT')
@@ -21,18 +24,19 @@
                                <div class="form-group col-sm-6">
                                   <label for="name">Nom:</label>
                                   <input type="text" class="form-control" id="name" name="name" value="{{ auth()->user()->name }}">
+                                  <div class="pt-2 pb-2"></div>
                                   @error('name')
                                     <small class="text-danger">{{$message}}</small>
-                                @enderror
+                                 @enderror
                                </div>
                                <div class="form-group col-sm-6">
                                   <label for="email">Email:</label>
                                   <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}">
-                                  @error('email')
-                                    <small class="text-danger">{{$message}}</small>
-                                @enderror
+                                  <div class="pt-2 pb-2"></div>
+                                 @error('email')
+                                 <small class="text-danger">{{$message}}</small>
+                                 @enderror
                                </div>
-                               
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Modifier</button>
                          </form>

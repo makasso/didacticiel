@@ -25,7 +25,7 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-body">
                         <div class="top-block d-flex align-items-center justify-content-between">
-                            <h5>Categories</h5>
+                            <h5>Catégories</h5>
                             <span class="badge badge-warning">Stats</span>
                         </div>
                         <h3><span class="counter">{{ $categories }}</span></h3>
@@ -73,7 +73,7 @@
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
                                     <h4 class="card-title">
-                                        Overview Progress
+                                        Statistiques
                                     </h4>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">
-                                                    UX / UI Design
+                                                    Catégories
                                                 </p>
                                             </div>
                                             <div class="col-sm-6">
@@ -97,18 +97,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="iq-media-group text-sm-right">
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/05.jpg" alt="" />
-                                                    </a>
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/06.jpg" alt="" />
-                                                    </a>
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/07.jpg" alt="" />
-                                                    </a>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -117,7 +106,7 @@
                                         <div class="d-flex align-items-center justify-content-between row">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">
-                                                    Development
+                                                    Modules
                                                 </p>
                                             </div>
                                             <div class="col-sm-6">
@@ -131,18 +120,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="iq-media-group text-sm-right">
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/08.jpg" alt="" />
-                                                    </a>
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/09.jpg" alt="" />
-                                                    </a>
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/04.jpg" alt="" />
-                                                    </a>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +129,7 @@
                                         <div class="d-flex align-items-center justify-content-between row">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">
-                                                    Testing
+                                                    Cours
                                                 </p>
                                             </div>
                                             <div class="col-sm-6">
@@ -165,18 +143,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="iq-media-group text-sm-right">
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/01.jpg" alt="" />
-                                                    </a>
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/02.jpg" alt="" />
-                                                    </a>
-                                                    <a href="#" class="iq-media">
-                                                        <img class="img-fluid avatar-40 rounded-circle"
-                                                            src="../assets/images/user/03.jpg" alt="" />
-                                                    </a>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

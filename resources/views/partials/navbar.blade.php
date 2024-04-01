@@ -19,15 +19,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-list align-items-center">
-                        <li>
-                            <div class="iq-search-bar device-search">
-                                <form action="#" class="searchbox">
-                                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                    <input type="text" class="text search-input"
-                                        placeholder="Rechercher ici ...">
-                                </form>
-                            </div>
-                        </li>
+                        
                         <li class="nav-item nav-icon search-content">
                             <a href="#" class="search-toggle rounded" id="dropdownSearch"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,7 +42,7 @@
                             <a href="#" class="search-toggle dropdown-toggle  d-flex align-items-center"
                                 id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <img src=" {{ asset('assets/images/user/1.jpg') }}" class="img-fluid rounded-circle"
+                                <img src=" {{ asset('assets/images/user/user-2.jpg') }}" class="img-fluid rounded-circle"
                                     alt="user">
                                 <div class="caption ml-3">
                                     <h6 class="mb-0 line-height">{{ auth()->user()->name }} {{ auth()->user()->role_as == '1' ? '(Admin)' : '' }}<i
@@ -70,7 +62,7 @@
                                     @if(auth()->user()->role_as == 0)
                                         <a href="{{ route('profile.prof.edit') }}">Modifier Profile</a>
                                     @else
-                                        <a href="{{ route('profile.edit') }}">Modifier Profile</a>
+                                        <a href="{{ route('admin.profile.edit') }}">Modifier Profile</a>
                                     @endif
                                 </li>
                                 <li class="dropdown-item d-flex svg-icon">
@@ -83,7 +75,7 @@
                                     @if(auth()->user()->role_as == 0)
                                         <a href="{{ route('profile.prof.password') }}">Modifier Mot de passe</a>
                                     @else
-                                        <a href="{{ route('profile.password') }}">Modifier Mot de passe</a>
+                                        <a href="{{ route('admin.profile.password') }}">Modifier Mot de passe</a>
                                     @endif
                                 </li>
                                 <li class="dropdown-item  d-flex svg-icon border-top">

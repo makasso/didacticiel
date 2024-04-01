@@ -13,7 +13,7 @@
             <ul id="iq-sidebar-toggle" class="iq-menu">
                 <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <a href="{{ url('/') }}" class="svg-icon">
-                        <i class="ri-home-3-line"></i>
+                        <i class="ri-home-3-fill"></i>
                         <span class="ml-4">Tableau de bord</span>
                     </a>
                 </li>
@@ -45,12 +45,12 @@
                         <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                     </a>
                     <ul id="cours" class="iq-submenu collapse" data-parent="#cours">
-                        <li class="{{ request()->routeIs('admin.category.index') ? 'active' : '' }}">
+                        <li class="{{ request()->routeIs('admin.course.index') ? 'active' : '' }}">
                             <a href="{{ route('admin.course.index') }}">
                                 <i class="las la-minus"></i><span>Lister les cours</span>
                             </a>
                         </li>
-                        <li class="{{ request()->routeIs('admin.category.create') ? 'active' : '' }}">
+                        <li class="{{ request()->routeIs('admin.course.create') ? 'active' : '' }}">
                             <a href="{{ route('admin.course.create') }}">
                                 <i class="las la-minus"></i><span>Ajouter un cours</span>
                             </a>

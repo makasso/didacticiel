@@ -22,7 +22,7 @@ Route::get('/loginUser', function(){
 
 
 Route::controller(App\Http\Controllers\Login\LoginUserController::class)->group(function () {
-    Route::get('/', 'loginUser');
+    Route::get('/', 'loginUser')->name('login');
     Route::post('/login-user', 'userLogin')->name('user.login');
     Route::post('/logout', 'logout')->name('logout');
 
@@ -41,8 +41,11 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::controller(App\Http\Controllers\Login\LoginUserController::class)->group(function () {
-        Route::get('/profile/edit', 'updateProfile')->name('profile.edit');
-        Route::get('/profile/password', 'updatePassword')->name('profile.password');
+        Route::get('/profile/edit', 'updateProfile')->name('admin.profile.edit');
+        Route::put('/profile/edit', 'updateAdminProfile')->name('admin.profile.edit');
+        Route::get('/profile/password', 'updatePassword')->name('admin.profile.password');
+        Route::put('/profile/password', 'updateAdminPassword')->name('admin.profile.password');
+
     });
 
 
@@ -64,6 +67,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
         Route::post('/category', 'store')->name('admin.category.store');
         Route::get('/category/{category}/edit', 'edit')->name('admin.category.edit');
         Route::put('/category/{category}', 'update')->name('admin.category.update');
+        Route::delete('/category/{category}', 'destroy')->name('admin.category.destroy');
 
     });
 
@@ -72,9 +76,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function (){
         Route::get('/course', 'index')->name('admin.course.index');
         Route::get('/course/create', 'create')->name('admin.course.create');
         Route::post('/course', 'store')->name('admin.course.store');
-        Route::get('/course/{course}/edit', 'edit');
-        Route::put('/course/{course}', 'update');
-        Route::get('/course/{course_id}/delete', 'destroy');
+        Route::get('/course/{course}/edit', 'edit')->name('admin.course.edit');
+        Route::put('/course/{course}', 'update')->name('admin.course.update');
+        Route::delete('/course/{course}/delete', 'destroy')->name('admin.course.destroy');
 
     });
 
@@ -178,6 +182,5 @@ Route::group(['middleware'=>['auth', 'isProf']] ,function () {
     Route::post('/examen-submit', [FrontendController::class, 'examenSubmit'])->name('submitExamen');
 
     Route::get('/cours/{id}', [FrontendController::class, 'frondtendCourse'])->name('frondtendCourse');
-
 
 });

@@ -95,7 +95,8 @@ body {
   line-height: 1.5;
   color: #605C8D;
   text-align: left;
-  background-color: #F8F7F7; }
+  background-color: #F8F7F7; 
+}
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -2545,7 +2546,7 @@ textarea.form-control {
   .custom-file-input:disabled ~ .custom-file-label {
     background-color: #e9ecef; }
   .custom-file-input:lang(en) ~ .custom-file-label::after {
-    content: "Browse"; }
+    content: "Naviguer"; }
   .custom-file-input ~ .custom-file-label[data-browse]::after {
     content: attr(data-browse); }
 
@@ -2575,7 +2576,7 @@ textarea.form-control {
     padding: 0.313rem 0.625rem;
     line-height: 1.5;
     color: #495057;
-    content: "Browse";
+    content: "Naviguer";
     background-color: #e9ecef;
     border-left: inherit;
     border-radius: 0 16px 16px 0; }

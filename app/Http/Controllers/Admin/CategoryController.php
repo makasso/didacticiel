@@ -46,10 +46,10 @@ class CategoryController extends Controller
             $category->image = $uploadPath.$filename;
         }
 
-        $category->status = $request->status == true ? '1': '0';
+        $category->status = $request->status == 'on' ? '1': '0';
         $category->save();
 
-        return redirect('admin/category')->withToastSuccess('Category Added Successfully');
+        return redirect('admin/category')->withToastSuccess('Catégorie ajoutée avec succès!');
     }
 
     // function update category

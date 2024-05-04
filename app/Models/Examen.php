@@ -21,7 +21,8 @@ class Examen extends Model
         'name',
         'date',
         'time',
-        'attempt'
+        'attempt',
+        'copy_link',
 
     ];
 
@@ -29,7 +30,7 @@ class Examen extends Model
     public $count = '';
     public function getIdAttribute($value)
     {
-        $attemptCount = ExamensAttempt::where(['examen_id'=>$value, 'user_id'=>auth()->user()->id])->count();
+        $attemptCount = ExamensAttempt::where(['examen_id'=>$value, 'student_id'=>auth()->user()->id])->count();
         $this->count = $attemptCount;
         return $value;
     }

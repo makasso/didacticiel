@@ -16,11 +16,9 @@
                 <div class="row">
                     <div class="col-lg-6 text-right">
                         <span class="mr-1">
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>©
+                            {{ date('Y') }}©
                         </span> 
-                        <span class="text-primary">{{ env('APP_NAME') }}</span>.
+                        <span class="text-primary">{{ config('app.name') }}</span>.
                     </div>
                 </div>
             </div>

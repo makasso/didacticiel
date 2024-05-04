@@ -43,8 +43,22 @@ class SliderFormRequest extends FormRequest
             ],
             'videos'=>[
                 'nullable',
-                // 'mimes:mp4,ogx,oga,ogv,ogg,webm'
+                //'mimes:mp4,ogx,oga,ogv,ogg,webm'
             ],
+
+            'is_introduction' => [
+                'required'
+            ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Le champs nom est requis',
+            'name.string' => 'Le champs nom doit être du texte',
+            'description.required' => 'Le champs description est requis',
+            'is_introduction.required' => 'Le champs définir comme introduction est requis',
         ];
     }
 }

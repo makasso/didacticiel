@@ -29,7 +29,7 @@ class CourseFormRequest extends FormRequest
                 'integer'
             ],
             'user_id' => [
-                'required',
+                'nullable',
                 'integer'
             ],
             'name'=>[
@@ -38,10 +38,6 @@ class CourseFormRequest extends FormRequest
             ],
             'duree'=>[
                 'required',
-            ],
-            'number_module'=>[
-                'required',
-                'integer'
             ],
         ];
     }

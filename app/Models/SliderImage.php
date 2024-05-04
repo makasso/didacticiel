@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Slider;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SliderImage extends Model
 {
@@ -15,4 +16,11 @@ class SliderImage extends Model
         'slider_id',
         'image'
     ];
+
+    public function sliders()
+    {
+        return $this->belongsTo(Slider::class, 'slider_id', 'id');
+    }
+
+    
 }

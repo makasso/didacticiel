@@ -13,15 +13,9 @@ use Illuminate\Support\Facades\Session;
 class LoginUserController extends Controller
 {
     //page login
-    public function loginUser()
+    public function login()
     {
         return view('auth.login');
-    }
-
-    // page update profile
-    public function updateProfileProf()
-    {
-        return view('profile.prof.edit');
     }
 
     // page update profile
@@ -36,11 +30,6 @@ class LoginUserController extends Controller
         return view('profile.password');
     }
 
-    // page update password Prof
-    public function updatePasswordProf()
-    {
-        return view('profile.prof.password');
-    }
 
     public function userLogin(Request $request)
     {
@@ -55,21 +44,17 @@ class LoginUserController extends Controller
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             if (Auth::user()->role_as == 1) {
-                alert()->success( Auth::user()->name . ' vous êtes connecté en tant que Administrateur');
-                return redirect('/admin/dashboard');
+                return redirect('/admin/dashboard')->withToastSuccess(Auth::user()->name . ' vous êtes connecté en tant que administrateur');
             }
             else{
                 if (Auth::user()->expiry_date >= Carbon::today()) {
-                    alert()->success( Auth::user()->name . ' vous êtes connecté en tant que professeur');
-                    return redirect('/prof/dashboard');
+                    return redirect('/prof/dashboard')->withToastSuccess(Auth::user()->name . ' vous êtes connecté en tant que professeur');
                 }else {
-                    alert()->error('Votre date de validité a expiré');
-                    return back(); 
+                    return back()->withToastError('Votre date de validité a expiré');
                 }
             }
         } else{
-            alert()->error('Email ou mot de passe invalide!');
-            return back();
+            return back()->withToastError('Email ou mot de passe invalide!');;
         }
     }
 
@@ -78,11 +63,10 @@ class LoginUserController extends Controller
         Session::flush();
         Auth::logout();
 
-        alert()->success('Déconnexion réussie', 'Vous êtes déconnecté!');
-        return redirect('/');
+        return redirect('/')->withToastSuccess('Déconnexion réussie');
     }
 
-    public function updateAdminProfile(Request $request)
+    public function updateProfileUser(Request $request)
     {
         $request->validate([
             'name' => 'string|required',
@@ -95,10 +79,16 @@ class LoginUserController extends Controller
 
         $user->save();
 
-        return redirect('/admin/profile/edit');
+        if (Auth::user()->role_as == '0') {
+            return redirect('/prof/profile/edit')->withToastSuccess('Votre profil a été mis à jour avec succès');
+
+        } else {
+            return redirect('/admin/profile/edit')->withToastSuccess('Votre profil a été mis à jour avec succès');
+        }
+
     }
 
-    public function updateAdminPassword(Request $request)
+    public function updatePasswordUser(Request $request)
     {
         $request->validate([
             'current_password' => 'string|required',
@@ -114,7 +104,13 @@ class LoginUserController extends Controller
 
         $user->save();
 
-        alert()->success('Votre mot de passe a été mis à jour avec succès');
-        return redirect('/admin/profile/password');
+        if (Auth::user()->role_as == '0') {
+        return redirect('/prof/profile/password')->withToastSuccess('Votre mot de passe a été mis à jour avec succès');
+        } else {
+        return redirect('/admin/profile/password')->withToastSuccess('Votre mot de passe a été mis à jour avec succès');
+
+        }
+
     }
+    
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Prof;
 
-use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Examen;
 use Illuminate\Http\Request;
+use App\Models\ExamensAttempt;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -12,17 +15,34 @@ class DashboardController extends Controller
     public function dashboard()
     {
         // $courses = Course::with('categoriesCourses')->orderBy('id')->get();
-        return view('prof.dashboard');
+        $courses = Course::with('categoriesCourses')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->count();
+        $examens = Examen::orderBy('id', 'DESC')->count();
+
+        return view('prof.dashboard', compact('courses', 'examens'));
     }
 
     public function index()
     {
-        return view('prof.course.index');
+        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(10);
+        return view('prof.course.index', compact('courses'));
     }
 
     public function indexExamen()
     {
-        # code...
-        return view('prof.examen.index');
+        $examens = Examen::orderBy('id', 'DESC')->get();
+        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+        return view('prof.examen.index', compact('examens', 'courses'));
+    }
+
+    public function students(int $course_id)
+    {
+        $students = ExamensAttempt::with(['student', 'examen'])
+                        ->join('examens', 'examens_attempt.examen_id', 'examens.id')
+                        ->join('courses', 'examens.course_id', 'courses.id')
+                        ->where('status', 'is_completed')
+                        ->where('courses.id', $course_id)
+                        ->get();
+
+        return view('prof.student.index', compact('students'));
     }
 }

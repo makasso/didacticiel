@@ -21,12 +21,12 @@ class QnaExam extends Model
 
     public function question()
     {
-        return $this->hasMany(QuestionExamen::class, 'id', 'question_id');
+        return $this->hasMany(QuestionModule::class, 'id', 'question_id');
     }
 
     public function answers()
     {
-        return $this->hasMany(AnswerExamen::class, 'question_id', 'question_id');
+        return $this->hasMany(AnswerModule::class, 'question_id', 'question_id');
     }
 
 }

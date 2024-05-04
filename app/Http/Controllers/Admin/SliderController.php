@@ -13,11 +13,11 @@ use App\Models\SliderVideo;
 
 class SliderController extends Controller
 {
-    //
     public function index()
     {
-        return view('admin.slider.index');
-    }
+        $sliders = Slider::orderBy('id', 'DESC')->get();
+        confirmDelete('Supprimer le slide?', 'Voulez-vous vraiment supprimer ce slide?');
+        return view('admin.slider.index', ['sliders'=> $sliders]);    }
 
 
     public function create()
@@ -25,8 +25,6 @@ class SliderController extends Controller
         $modules = Module::all();
         return view('admin.slider.create', compact('modules'));
     }
-
-
 
     public function store(SliderFormRequest $request)
     {
@@ -38,6 +36,8 @@ class SliderController extends Controller
             'module_id' => $validateData['module_id'],
             'name' => $validateData['name'],
             'description' => $validateData['description'],
+            'is_introduction' => $request->is_introduction == 'on' ? '1' : '0'
+
         ]);
 
         // upload image of class image in slider
@@ -63,7 +63,6 @@ class SliderController extends Controller
 
         }
 
-
         // upload videos of class image in slider
         if ($request->hasFile('videos')) {
 
@@ -77,7 +76,6 @@ class SliderController extends Controller
                 $videosFile->move('uploads/sliders/videos/', $filenamevideos);
                 $finalVideosPathName = $uploadvideosPath.$filenamevideos;
 
-
                 // save videos with create the function sliderVideos in model Product
                 $slider->sliderVideos()->create([
                     'slider_id' => $slider->id,
@@ -87,10 +85,8 @@ class SliderController extends Controller
 
         }
 
-        return redirect('admin/slider')->with('message', 'Slider Added Succesfully');
-
+        return redirect('admin/slider')->withToastSuccess('Slide créé avec succès');
     }
-
 
 
     public function edit(int $slider_id)
@@ -117,13 +113,13 @@ class SliderController extends Controller
                 'module_id' => $validateData['module_id'],
                 'name' => $validateData['name'],
                 'description' => $validateData['description'],
+                'is_introduction' => $request->is_introduction == 'on' ? '1' : '0'
             ]);
 
 
             // upload image of class image in slider
             if ($request->hasFile('image'))
             {
-
                 $uploadPath = 'uploads/sliders/images/';
 
                 $i = 1;
@@ -143,7 +139,6 @@ class SliderController extends Controller
                 }
 
             }
-
 
             // upload videos of class image in slider
             if ($request->hasFile('videos'))
@@ -166,80 +161,14 @@ class SliderController extends Controller
                         'videos' => $finalVideosPathName,
                     ]);
                 }
-
-
             }
-
             return redirect('admin/slider')->with('message', 'Slider Added Succesfully');
-
         }
         else
         {
             return redirect('admin/slider')->with('message', 'No Such Slider Id Found');
         }
-
-        // $slider = Slider::findOrFail($slider_id)->update([
-        //     'module_id' => $validateData['module_id'],
-        //     'name' => $validateData['name'],
-        //     'description' => $validateData['description'],
-        // ]);
-
-
-        // // upload image of class image in slider
-        // if ($request->hasFile('image'))
-        // {
-
-        //     $uploadPath = 'uploads/sliders/images/';
-
-        //     $i = 1;
-        //     foreach ($request->file('image') as $imagesFile) {
-
-        //         $extention = $imagesFile->getClientOriginalExtension();
-        //         $filename = time().$i++.'.'.$extention;
-        //         $imagesFile->move('uploads/sliders/images/', $filename);
-        //         $finalImagePathName = $uploadPath.$filename;
-
-
-        //         // save image with create the function productImages in model Product
-        //         $slider->sliderImages()->create([
-        //             'slider_id' => $slider->id,
-        //             'image' => $finalImagePathName,
-        //         ]);
-        //     }
-
-        // }
-
-
-        // // upload videos of class image in slider
-        // if ($request->hasFile('videos'))
-        // {
-
-        //     $uploadvideosPath = 'uploads/sliders/videos/';
-
-        //     $i = 1;
-        //     foreach ($request->file('videos') as $videosFile) {
-
-        //         $extentionvideos = $videosFile->getClientOriginalExtension();
-        //         $filenamevideos = time().$i++.'.'.$extentionvideos;
-        //         $videosFile->move('uploads/sliders/videos/', $filenamevideos);
-        //         $finalVideosPathName = $uploadvideosPath.$filenamevideos;
-
-
-        //         // save videos with create the function sliderVideos in model Product
-        //         $slider->sliderVideos()->create([
-        //             'slider_id' => $slider->id,
-        //             'videos' => $finalVideosPathName,
-        //         ]);
-        //     }
-
-
-        // }
-
-        // return redirect('admin/slider')->with('message', 'Slider Added Succesfully');
-
-
     }
-
 
     public function destroyImage(int $slider_image_id)
     {
@@ -249,8 +178,7 @@ class SliderController extends Controller
             File::delete($SliderImage->image);
         }
         $SliderImage->delete();
-        return redirect()->back()->with('message', 'Slider Image Deleted');
-
+        return redirect()->back()->withToastSuccess('Image slide supprimé avec succès');
     }
 
 
@@ -262,8 +190,7 @@ class SliderController extends Controller
             File::delete($SliderVideo->videos);
         }
         $SliderVideo->delete();
-        return redirect()->back()->with('message', 'Slider Video Deleted');
-
+        return redirect()->back()->withToastSuccess('Vidéo slide supprimé avec succès');
     }
 
 
@@ -290,8 +217,7 @@ class SliderController extends Controller
         }
 
         $slider->delete();
-        return redirect()->back()->with('message', 'Slider Deleted with all its image and all videos');
-
+        return redirect()->back()->withToastSuccess('Slide supprimé avec succès');
     }
 
 }

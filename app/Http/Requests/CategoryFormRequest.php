@@ -32,9 +32,18 @@ class CategoryFormRequest extends FormRequest
                 'required',
             ],
             'image'=>[
-                'nullable',
-                'mimes:jpg|jpeg|png'
+                'mimes:jpg,jpeg,png',
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Le champs nom est requis',
+            'name.string' => 'Le champs nom doit être du texte',
+            'description.required' => 'Le champs description est requis',
+            'image.mimes' => 'L\'image doit être un fichier de type jpg, jpeg ou png',
         ];
     }
 }

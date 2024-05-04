@@ -21,7 +21,6 @@
                                         <th>Catégorie</th>
                                         <th>Prof</th>
                                         <th>Nom</th>
-                                        <th>Durée</th>
                                         <th>Nombre Module</th>
                                         <th>Actions</th>
                                     </tr>
@@ -46,8 +45,7 @@
         
                                             </td>
                                             <td>{{$course->name}}</td>
-                                            <td>{{$course->duree}} Hrs</td>
-                                            <td>{{$course->number_module}}</td>
+                                            <td>{{$course->modulesCourses->count()}}</td>
                                             <td>
                                                 <a href="{{ route('admin.course.edit', $course) }}" class="btn btn-success">Modifier</a>
                                                 <a href="{{ route('admin.course.destroy', $course) }}"  class="btn btn-danger" data-confirm-delete="true">Supprimer</a>

@@ -15,13 +15,20 @@ class QnAModuleController extends Controller
     {
         // answers la fonction situer dans le model QuestionExamen
         $questions = QuestionModule::with('answers')->get();
+
+        confirmDelete('Supprimer question?', 'Voulez-vous vraiment supprimer cette question');
         return view('admin.qnaans-module.index', compact('questions'));
     }
 
-    // create Q&A
-    public function create(Request $request)
-    {
 
+    public function create()
+    {
+        return view('admin.qnaans-module.create');
+    }
+
+    // create Q&A
+    public function store(Request $request)
+    {
         try {
 
             $questionId = QuestionModule::insertGetId([
@@ -43,7 +50,7 @@ class QnAModuleController extends Controller
                 ]);
             }
 
-            return response()->json(['success'=>true, 'message'=> 'Question and answer add Successfully!']);
+            return response()->json(['success'=>true, 'message'=> 'Question et réponses ajoutées avec succès!']);
 
         } catch (\Exception $e) {
             return response()->json(['success'=>false, 'message'=>$e->getMessage()]);
@@ -64,7 +71,7 @@ class QnAModuleController extends Controller
     public function deleteAns(Request $request)
     {
         AnswerModule::where('id', $request->id)->delete();
-        return response()->json(['success'=>true, 'message'=>'Answer deleted successfully']);
+        return response()->json(['success'=>true, 'message'=>'Réponse supprimée avec succès!']);
     }
 
 
@@ -74,7 +81,6 @@ class QnAModuleController extends Controller
         try {
 
             QuestionModule::where('id', $request->question_id)->update([
-
                 'question'=> $request->question,
             ]);
 
@@ -97,7 +103,6 @@ class QnAModuleController extends Controller
                 }
             }
 
-
             // new answer added
             if (isset($request->new_answers)) {
 
@@ -117,7 +122,7 @@ class QnAModuleController extends Controller
 
                 }
             }
-            return response()->json(['success'=>true, 'message'=>'Q&A updated successfully!']);
+            return response()->json(['success'=>true, 'message'=>'Question mise à jour avec succès!']);
 
 
         } catch (\Exception $e) {
@@ -131,15 +136,10 @@ class QnAModuleController extends Controller
     {
         QuestionModule::where('id', $request->id)->delete();
         AnswerModule::where('question_id', $request->id)->delete();
-
-        return response()->json(['success'=>true, 'message'=>'Q&A Delete successfully!']);
+        return redirect()->back()->withToastSuccess('Question supprimée avec succès!');
 
     }
-
-
-
-
-
+    
     // get Question in module
     public function getQuestionsModule(Request $request)
     {
@@ -151,7 +151,6 @@ class QnAModuleController extends Controller
                 # code...
                 $data = [];
                 $counter = 0;
-
 
                 foreach ($questions as $question) {
 
@@ -169,7 +168,7 @@ class QnAModuleController extends Controller
 
             }
             else {
-                return response()->json(['success'=>false, 'message'=>"Questions not Found!"]);
+                return response()->json(['success'=>false, 'message'=> "Aucune question trouvée!"]);
 
             }
 
@@ -196,7 +195,8 @@ class QnAModuleController extends Controller
 
                 }
             }
-            return response()->json(['success'=>true, 'message'=>'Question added Successfully!']);
+            toast('Question ajoutée succès', 'success');
+            return response()->json(['success'=>true, 'message'=>'Question ajoutée avec succès!']);
 
 
         } catch (\Exception $e) {
@@ -210,8 +210,6 @@ class QnAModuleController extends Controller
     {
         # code...
         try {
-
-
             $data = QnaModule::where('module_id', $request->module_id)->with('question')->get();
             return response()->json(['success'=>true, 'message'=>'Questions details!', 'data'=>$data]);
 
@@ -223,18 +221,12 @@ class QnAModuleController extends Controller
     // delete show module question
     public function deleteModuleQuestions(Request $request)
     {
-        # code...
         try {
-
-
             QnaModule::where('id', $request->id)->delete();
-            return response()->json(['success'=>true, 'message'=>'Questions Module deleted!']);
+            return response()->json(['success'=> true, 'message'=> 'Question supprimée avec succès']);
 
         } catch (\Exception $e) {
             return response()->json(['success'=>false, 'message'=>$e->getMessage()]);
         }
     }
-
-
-
 }

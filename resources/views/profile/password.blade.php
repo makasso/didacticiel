@@ -31,7 +31,7 @@
                                             <div class="iq-alert-text">{{ session('error') }}</div>
                                         </div>
                                     @endif
-                                    <form method="POST" action="{{ route('admin.profile.password') }}">
+                                    <form method="POST" action="">
                                         @csrf
                                         @method('PUT')
                                         <div class="row align-items-center">

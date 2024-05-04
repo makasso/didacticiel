@@ -14,8 +14,9 @@ class ProfController extends Controller
 
     public function index()
     {
-
-        return view('admin.prof.index');
+        $users = User::orderBy('id', 'DESC')->where('role_as', '0')->get();
+        confirmDelete('Supprimer le prof?', 'Voulez-vous vraiment supprimer le prof?');
+        return view('admin.prof.index', compact('users'));
 
     }
 
@@ -43,14 +44,14 @@ class ProfController extends Controller
         $user->email = $request->email;
         $user->expiry_date = $request->expiry_date;
         $user->speciality = $request->speciality;
-        $matricule = Helper::IDGenerator(new User, 'matricule', 5, 'RDU');
+        $matricule = Helper::IDGenerator(new User, 'matricule', 'RDU', 5);
 
         $user->matricule = $matricule;
 
         $user->password = Hash::make($request->password);
 
         $user->save();
-        return redirect('admin/prof')->with('message', 'Un nouveau prof a ete ajoute sans success');
+        return redirect('admin/prof')->withToastSuccess('Un nouveau prof a été ajouté avec succès');
 
     }
 
@@ -69,7 +70,6 @@ class ProfController extends Controller
             'company' => 'string|min:2',
             'speciality' => 'string|min:2',
             'email'=> 'string|email|max:100',
-            // 'expiry_date' => 'required'
         ]);
 
         $user = User::findOrFail($user);
@@ -83,7 +83,7 @@ class ProfController extends Controller
 
         $user->update();
 
-        return redirect('admin/prof')->with('message', 'Mise a jour des informations du prof');
+        return redirect('admin/prof')->withToastSuccess('Informations du prof mises à jour!');
     }
 
 
@@ -91,7 +91,7 @@ class ProfController extends Controller
     {
         User::findOrFail($user)->delete();
 
-        return redirect('admin/prof')->with('message', 'User Deleted Successfully');
+        return redirect('admin/prof')->withToastSuccess('Professeur supprimé avec succès');
 
     }
 }

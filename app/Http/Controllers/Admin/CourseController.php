@@ -15,7 +15,7 @@ class CourseController extends Controller
     //
     public function index()
     {
-        $courses = Course::latest()->get();
+        $courses = Course::latest()->with('modulesCourses')->get();
         $users = User::where('role_as', '0')->get();
 
         confirmDelete('Supprimer le cours?', 'Voulez-vous vraiment supprimer ce cours?');
@@ -35,7 +35,7 @@ class CourseController extends Controller
     public function store(CourseFormRequest $request)
     {
         $validateData = $request->validated();
-         $myuid = uniqid('cours');
+         $myuid = Str::random(128);
 
         $category = Category::findOrFail($validateData['category_id']);
 
@@ -43,10 +43,9 @@ class CourseController extends Controller
         // dans le model category
         $course = $category->coursesCategories()->insert([
             'category_id' => $validateData['category_id'],
-            'user_id' => $validateData['user_id'],
+            'user_id' => $validateData['user_id'] ?? null,
             'name' => $validateData['name'],
             'duree' => $validateData['duree'],
-            'number_module' => $validateData['number_module'],
             'copy_link'=> $myuid
         ]);
 
@@ -54,28 +53,27 @@ class CourseController extends Controller
         return redirect('admin/course')->withToastSuccess('Cours ajouté avec succès');
     }
 
-    public function edit(Course $course)
+    public function edit(int $course_id)
     {
         $categories = Category::all();
         $users = User::where('role_as', '0')->get();
-        $course = Course::find($course);
+        $course = Course::find($course_id);
 
         return view('admin.course.edit', compact('categories', 'course', 'users'));
     }
 
-    public function update(CourseFormRequest $request, Course $course)
+    public function update(CourseFormRequest $request, int $course_id)
     {
         $validateData = $request->validated();
 
-        Course::find($course)->update([
+        Course::find($course_id)->update([
             'category_id' => $validateData['category_id'],
-            'user_id' => $validateData['user_id'],
+            'user_id' => $validateData['user_id'] ?? null,
             'name' => $validateData['name'],
             'duree' => $validateData['duree'],
-            'number_module' => $validateData['number_module'],
         ]);
 
-        return redirect('admin/course')->with('message', 'Course Update Succesfully');
+        return redirect('admin/course')->withToastSuccess('Cours modifié avec succès');
     }
 
     public function destroy(int $course_id)

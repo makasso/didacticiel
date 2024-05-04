@@ -19,39 +19,73 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-list align-items-center">
-                        
+
                         <li class="nav-item nav-icon search-content">
-                            <a href="#" class="search-toggle rounded" id="dropdownSearch"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="search-toggle rounded" id="dropdownSearch" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <i class="ri-search-line"></i>
                             </a>
-                            <div class="iq-search-bar iq-sub-dropdown dropdown-menu"
-                                aria-labelledby="dropdownSearch">
+                            <div class="iq-search-bar iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownSearch">
                                 <form action="#" class="searchbox p-2">
                                     <div class="form-group mb-0 position-relative">
                                         <input type="text" class="text search-input font-size-12"
                                             placeholder="type here to search...">
-                                        <a href="#" class="search-link"><i
-                                                class="las la-search"></i></a>
+                                        <a href="#" class="search-link"><i class="las la-search"></i></a>
                                     </div>
                                 </form>
                             </div>
                         </li>
-                        
+
                         <li class="nav-item nav-icon dropdown caption-content">
                             <a href="#" class="search-toggle dropdown-toggle  d-flex align-items-center"
                                 id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <img src=" {{ asset('assets/images/user/user-2.jpg') }}" class="img-fluid rounded-circle"
-                                    alt="user">
+                                <img src=" {{ asset('assets/images/user/user-2.jpg') }}"
+                                    class="img-fluid rounded-circle" alt="user">
                                 <div class="caption ml-3">
-                                    <h6 class="mb-0 line-height">{{ auth()->user()->name }} {{ auth()->user()->role_as == '1' ? '(Admin)' : '' }}<i
-                                            class="las la-angle-down ml-2"></i></h6>
+                                    @auth
+                                        <h6 class="mb-0 line-height">{{ auth()->user()->name }}
+                                            {{ isset(auth()->user()->role_as) ? (auth()->user()->role_as == '1' ? '(Admin)' : '(Prof)') : '(Etudiant)' }}<i
+                                                class="las la-angle-down ml-2"></i></h6>
+                                    @endauth
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right border-none"
                                 aria-labelledby="dropdownMenuButton">
-                                
+
+                                @if (!auth()->guard('student')->user())
+                                    <li class="dropdown-item d-flex svg-icon">
+                                        <svg class="svg-icon mr-0 text-primary" id="h-02-p" width="20"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        @auth
+                                            @if (auth()->user()->role_as == 0)
+                                                <a href="{{ route('profile.prof.edit') }}">Modifier Profile</a>
+                                            @else
+                                                <a href="{{ route('admin.profile.edit') }}">Modifier Profile</a>
+                                            @endif
+                                        @endauth
+                                    </li>
+                                    <li class="dropdown-item d-flex svg-icon">
+                                        <svg class="svg-icon mr-0 text-primary" id="h-02-p" width="20"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        @auth
+                                            @if (auth()->user()->role_as == 0)
+                                                <a href="{{ route('profile.prof.password') }}">Modifier Mot de passe</a>
+                                            @else
+                                                <a href="{{ route('admin.profile.password') }}">Modifier Mot de passe</a>
+                                            @endif
+                                        @endauth
+                                    </li>
+
+                                @else
                                 <li class="dropdown-item d-flex svg-icon">
                                     <svg class="svg-icon mr-0 text-primary" id="h-02-p" width="20"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -59,25 +93,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
-                                    @if(auth()->user()->role_as == 0)
-                                        <a href="{{ route('profile.prof.edit') }}">Modifier Profile</a>
-                                    @else
-                                        <a href="{{ route('admin.profile.edit') }}">Modifier Profile</a>
-                                    @endif
+                                    @auth
+                                        <a href="#" data-toggle="modal"
+                                        data-target="#updateStudentProfile">Modifier Profile</a>
+                                    @endauth
                                 </li>
-                                <li class="dropdown-item d-flex svg-icon">
-                                    <svg class="svg-icon mr-0 text-primary" id="h-02-p" width="20"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                    @if(auth()->user()->role_as == 0)
-                                        <a href="{{ route('profile.prof.password') }}">Modifier Mot de passe</a>
-                                    @else
-                                        <a href="{{ route('admin.profile.password') }}">Modifier Mot de passe</a>
-                                    @endif
-                                </li>
+                                    
+                                @endif
+
                                 <li class="dropdown-item  d-flex svg-icon border-top">
                                     <svg class="svg-icon mr-0 text-primary" id="h-05-p" width="20"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -85,8 +108,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
-                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
-                                   <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                                    <a href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </li>
@@ -96,5 +120,40 @@
                 </div>
             </div>
         </nav>
+    </div>
+</div>
+
+<div class="modal fade" id="updateStudentProfile" tabindex="-1" aria-labelledby="updateStudentProfile"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <form method="POST" action="{{ route('student.profile.update')}}">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row align-items-center">
+                            <div class="form-group col-sm-6">
+                               <label for="name">Nom:</label>
+                               <input type="text" class="form-control" id="name" name="name" value="{{ auth()->user()->name }}">
+                               <div class="pt-2 pb-2"></div>
+                               @error('name')
+                                 <small class="text-danger">{{$message}}</small>
+                              @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </form>
+        </div>
     </div>
 </div>

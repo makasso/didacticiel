@@ -15,14 +15,17 @@ class ExamensAttempt extends Model
 
     protected $fillable = [
         'examen_id',
-        'user_id',
+        'student_id',
+        'marks',
+        'is_completed',
+        'certificate_id',
     ];
 
 
-    public function user()
+    public function student()
     {
         # code...
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(Student::class, 'id', 'student_id');
     }
 
     public function examen()

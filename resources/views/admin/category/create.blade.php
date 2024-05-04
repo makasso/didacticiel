@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <form method="POST" action="{{ route('admin.category.store')}}">
+                                    <form method="POST" action="{{ route('admin.category.store')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row align-items-center">
                                             <div class="form-group col-sm-12">
@@ -49,7 +49,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="custom-control custom-checkbox custom-checkbox-color custom-control-inline">
                                                     <input type="checkbox" class="custom-control-input" name="status" id="status">
-                                                    <label class="custom-control-label" for="status">Status</label>
+                                                    <label class="custom-control-label" for="status">Statut</label>
                                                  </div>
                                                 <div class="pt-2 pb-2"></div>
                                                 @error('status')

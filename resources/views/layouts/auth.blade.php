@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ env('APP_NAME') }} | @yield('title')</title>
+    <title>{{ config('app.name') }} | @yield('title')</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
@@ -62,6 +62,8 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
     <script src="{{ asset('assets/vendor/moment.min.js') }}"></script>
+
+    @stack('scripts')
 </body>
 
 </html>

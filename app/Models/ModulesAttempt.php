@@ -13,6 +13,7 @@ class ModulesAttempt extends Model
 
     protected $fillable = [
         'module_id',
-        'user_id',
+        'student_id',
+        'marks',
     ];
 }

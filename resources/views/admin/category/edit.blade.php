@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <form method="POST" action="{{ route('admin.category.update', $category) }}">
+                                    <form method="POST" action="{{ route('admin.category.update', $category) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="row align-items-center">
@@ -43,7 +43,8 @@
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" name="image" id="image">
                                                     <label class="custom-file-label" for="image">Choisissez une image</label>
-                                                 </div>
+                                                </div>
+                                                <img src="{{ asset($category->image)}}" style="width: 80px; height: 80px;" class="me-4 m-2 border" alt="Img"/>
                                                 @error('image')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -51,7 +52,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="custom-control custom-checkbox custom-checkbox-color custom-control-inline">
                                                     <input type="checkbox" class="custom-control-input" name="status" id="status" {{ $category->status == '1' ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="status">Status</label>
+                                                    <label class="custom-control-label" for="status">Statut</label>
                                                  </div>
                                                 <div class="pt-2 pb-2"></div>
                                                 @error('status')

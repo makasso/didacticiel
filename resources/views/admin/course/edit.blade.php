@@ -40,8 +40,8 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <div class="input-group mb-4">
-                                                    <select class="form-control" name="user_id" id="user_id" required>
-                                                        <option label="--Selectionner un professeur--" selected></option>
+                                                    <select class="form-control" name="user_id" id="user_id">
+                                                        <option label="--Selectionner un professeur--" selected value=""></option>
                                                         @foreach ($users as $user)
                                                             @if ($course->user_id)
                                                             <option value="{{ $user->id }}"
@@ -66,15 +66,6 @@
                                                 <input type="text" name="name" class="form-control"
                                                     value="{{ $course->name }}">
                                                 @error('name')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                                <div class="pt-2 pb-2"></div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="">Durée</label>
-                                                <input type="time" name="duree" class="form-control"
-                                                    value="{{ $course->duree }}">
-                                                @error('duree')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                                 <div class="pt-2 pb-2"></div>

@@ -39,27 +39,6 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Date</label>
-                                                <input type="date" id="date" name="date" class="form-control" min="{{ date('Y-m-d') }}">
-                                                @error('date')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Heure</label>
-                                                <input type="time" id="time" name="time" class="form-control">
-                                                @error('time')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Nombre d'essais</label>
-                                                <input type="number" min="1" id="attempt" name="attempt" class="form-control">
-                                                @error('attempt')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary mr-2">Créer</button>
                                     </form>

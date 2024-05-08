@@ -45,7 +45,6 @@ class CourseController extends Controller
             'category_id' => $validateData['category_id'],
             'user_id' => $validateData['user_id'] ?? null,
             'name' => $validateData['name'],
-            'duree' => $validateData['duree'],
             'copy_link'=> $myuid
         ]);
 
@@ -70,7 +69,6 @@ class CourseController extends Controller
             'category_id' => $validateData['category_id'],
             'user_id' => $validateData['user_id'] ?? null,
             'name' => $validateData['name'],
-            'duree' => $validateData['duree'],
         ]);
 
         return redirect('admin/course')->withToastSuccess('Cours modifié avec succès');

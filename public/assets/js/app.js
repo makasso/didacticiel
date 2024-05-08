@@ -371,15 +371,15 @@ continuousScrolling: false,
 }
 
 /*---------------------------------------------------------------------
-Data tables
------------------------------------------------------------------------*/
-if ($.fn.DataTable) {
-$(".data-table").DataTable({
-language: {
-url: '//cdn.datatables.net/plug-ins/2.0.5/i18n/fr-FR.json',
-},
-});
-}
+// Data tables
+// -----------------------------------------------------------------------*/
+// if ($.fn.DataTable) {
+// $(".data-table").DataTable({
+// language: {
+// url: '//cdn.datatables.net/plug-ins/2.0.5/i18n/fr-FR.json',
+// },
+// });
+// }
 
 /*---------------------------------------------------------------------
 Form Validation

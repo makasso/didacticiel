@@ -41,8 +41,12 @@
                                                 <div class="form-group">
                                                     <label>Nom Module</label>
                                                     <select name="module_id" class="form-control">
-                                                        @foreach ($modules as $module)
-                                                            <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                                        @foreach ($courses as $course)
+                                                            <optgroup label="{{$course->name}}">
+                                                                @foreach ($course->modulesCourses as $module)
+                                                                <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                                                @endforeach
+                                                            </optgroup>
                                                         @endforeach
                                                     </select>
                                                 </div>

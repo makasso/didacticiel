@@ -23,9 +23,6 @@
                                         <th>N°</th>
                                         <th>Nom</th>
                                         <th>Cours</th>
-                                        <th>Date</th>
-                                        <th>Durée</th>
-                                        <th>Essais</th>
                                         <th>Ajouter Question</th>
                                         <th>Afficher Question</th>
                                         <th>Actions</th>
@@ -44,9 +41,6 @@
                                                 @endif
 
                                             </td>
-                                            <td>{{ $examen->date }}</td>
-                                            <td>{{ $examen->time }} Hrs</td>
-                                            <td>{{ $examen->attempt }} Fois</td>
                                             <td>
                                                 <a href="#" class="addQuestion"
                                                     data-course-id="{{ $examen->coursesExamens->id }}"

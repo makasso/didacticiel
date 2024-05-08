@@ -24,6 +24,8 @@
      integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+ <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+ {{-- <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap4.js"></script> --}}
 
  <script>
      const Toast = Swal.mixin({
@@ -42,4 +44,10 @@
          $('.modal').hide();
          $('.modal-backdrop').remove();
      }
+
+     new DataTable('table', {
+         language: {
+             url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/fr-FR.json',
+         },
+     });
  </script>

@@ -29,14 +29,12 @@ class ModuleController extends Controller
         $request->validate([
             'name' => 'required|string',
             'course_id' => 'required|integer',
-            'time' => 'required|string',
             'attempt' => 'required|integer',
         ]);
 
         Module::create([
             'name' => $request->name,
             'course_id' => $request->course_id,
-            'time' => $request->time,
             'attempt' => $request->attempt,
             'status' => $request->status == 'on' ? '1' : '0'
         ]);
@@ -58,7 +56,6 @@ class ModuleController extends Controller
         $request->validate([
             'name' => 'required|string',
             'course_id' => 'required|integer',
-            'time' => 'required|string',
             'attempt' => 'required|integer',
         ]);
 

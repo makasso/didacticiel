@@ -29,9 +29,6 @@ class ExamenController extends Controller
         $request->validate([
             'course_id' => 'required|integer',
             'name' => 'required|string',
-            'date' => 'required',
-            'time' => 'required|string',
-            'attempt' => 'required|integer',
         ]);
 
         $myuid = uniqid('exam');
@@ -53,9 +50,6 @@ class ExamenController extends Controller
         $request->validate([
             'course_id' => 'required|integer',
             'name' => 'required|string',
-            'date' => 'required',
-            'time' => 'required|string',
-            'attempt' => 'required|integer',
         ]);
 
         $exam = Examen::find($examen_id);

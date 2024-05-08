@@ -19,7 +19,6 @@ class Course extends Model
         'category_id',
         'user_id',
         'name',
-        'duree',
         'number_module',
     ];
 

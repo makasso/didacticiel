@@ -47,7 +47,6 @@ class SliderFormRequest extends FormRequest
             ],
 
             'is_introduction' => [
-                'required'
             ]
         ];
     }
@@ -58,7 +57,6 @@ class SliderFormRequest extends FormRequest
             'name.required' => 'Le champs nom est requis',
             'name.string' => 'Le champs nom doit être du texte',
             'description.required' => 'Le champs description est requis',
-            'is_introduction.required' => 'Le champs définir comme introduction est requis',
         ];
     }
 }

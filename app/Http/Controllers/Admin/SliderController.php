@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Course;
 use App\Models\Module;
 use App\Models\Slider;
 use App\Models\SliderImage;
+use App\Models\SliderVideo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\SliderFormRequest;
-use App\Models\SliderVideo;
 
 class SliderController extends Controller
 {
@@ -22,8 +23,8 @@ class SliderController extends Controller
 
     public function create()
     {
-        $modules = Module::all();
-        return view('admin.slider.create', compact('modules'));
+        $courses = Course::with('modulesCourses')->get();
+        return view('admin.slider.create', compact('courses'));
     }
 
     public function store(SliderFormRequest $request)

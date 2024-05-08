@@ -15,7 +15,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="datatable" class="table data-table table-striped">
+                            <table class="table data-table table-striped">
                                 <thead>
                                     <tr class="ligth">
                                         <th>Matricule Certificat</th>
@@ -64,7 +64,7 @@
                 "info": true,
                 "searching": true,
                 language: {
-                    url: 'cdn.datatables.net/plug-ins/2.0.5/i18n/fr-FR.json',
+                    url: 'cdn.datatables.net/plug-ins/2.0.7/i18n/fr-FR.json',
                 },
                 "columnDefs": [{
                     "searchable": false,

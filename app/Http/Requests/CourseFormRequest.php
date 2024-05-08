@@ -30,14 +30,10 @@ class CourseFormRequest extends FormRequest
             ],
             'user_id' => [
                 'nullable',
-                'integer'
             ],
             'name'=>[
                 'required',
                 'string'
-            ],
-            'duree'=>[
-                'required',
             ],
         ];
     }

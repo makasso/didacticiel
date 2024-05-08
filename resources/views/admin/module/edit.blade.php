@@ -23,7 +23,7 @@
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label>Cours</label>
-                                                <select required class="selectpicker form-control" name="course_id">
+                                                <select required class="form-control" name="course_id">
                                                     <option value="">--Sélectionnez le cours--</option>
                                                     @foreach ($courses as $course)
                                                             <option value="{{ $course->id }}"
@@ -44,13 +44,6 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>Heure</label>
-                                                <input type="time" id="time" name="time" class="form-control" value="{{$module->time}}">
-                                                @error('time')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
                                                 <label>Nombre d'essais</label>
                                                 <input type="number" min="1" id="attempt" name="attempt" class="form-control" value="{{$module->attempt}}">
                                                 @error('attempt')
@@ -59,7 +52,7 @@
                                             </div>
     
                                             <div class="form-group col-md-6">
-                                                <div class="custom-control custom-checkbox custom-checkbox-color custom-control-inline">
+                                                <div class="custom-control pt-5 custom-checkbox custom-checkbox-color custom-control-inline">
                                                     <input type="checkbox" class="custom-control-input" name="status" id="status" {{ $module->status == '1' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="status">Statut</label>
                                                  </div>

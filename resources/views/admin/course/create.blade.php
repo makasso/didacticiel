@@ -36,7 +36,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="input-group mb-4">
                                                     <select class="form-control" name="user_id" id="user_id">
-                                                        <option selected>--Selectionner un professeur--</option>
+                                                        <option selected value="">--Selectionner un professeur--</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                         @endforeach

@@ -2,6 +2,8 @@
 @section('title')
     Liste des Cours
 @endsection
+@include('admin.course.modal-form')
+
 
 @section('content')
     <div class="container-fluid">
@@ -19,9 +21,9 @@
                                 <thead>
                                     <tr class="ligth">
                                         <th>Catégorie</th>
-                                        <th>Prof</th>
                                         <th>Nom</th>
                                         <th>Nombre Module</th>
+                                        <th>Prof</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -34,21 +36,20 @@
                                                 @else
                                                     Aucune catégorie
                                                 @endif
-        
+
+                                            </td>
+                                            <td>{{ $course->name }}</td>
+                                            <td>{{ $course->modulesCourses->count() }}</td>
+                                            <td>
+                                                <a href="#" class="seeTeachers" data-id="{{ $course->id }}"
+                                                    data-toggle="modal" data-target="#seeTeachersModal"
+                                                    style="text-decoration: none">Afficher Professeurs</a>
                                             </td>
                                             <td>
-                                                @if ($course->user)
-                                                    {{ $course->user->name }}
-                                                @else
-                                                    Aucun professeur
-                                                @endif
-        
-                                            </td>
-                                            <td>{{$course->name}}</td>
-                                            <td>{{$course->modulesCourses->count()}}</td>
-                                            <td>
-                                                <a href="{{ route('admin.course.edit', $course) }}" class="btn btn-success">Modifier</a>
-                                                <a href="{{ route('admin.course.destroy', $course) }}"  class="btn btn-danger" data-confirm-delete="true">Supprimer</a>
+                                                <a href="{{ route('admin.course.edit', $course) }}"
+                                                    class="btn btn-success">Modifier</a>
+                                                <a href="{{ route('admin.course.destroy', $course) }}"
+                                                    class="btn btn-danger" data-confirm-delete="true">Supprimer</a>
                                             </td>
                                         </tr>
                                     @empty
@@ -64,8 +65,54 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
+    <script>
+        $('.seeTeachers').click(function() {
+
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                url: "{{ route('admin.course.getTeachers') }}",
+                type: "GET",
+                data: {
+                    course_id: id
+                },
+                success: function(data) {
+
+                    console.log(data);
+                    var html = '';
+                    var teachers = data.data;
+
+
+                    if (teachers.length > 0) {
+
+                        for (let i = 0; i < teachers.length; i++) {
+
+                            html += `
+                    <tr>
+                        <td>` + (i + 1) + `</td>
+                        <td>` + teachers[i]['name'] + `</td>
+                    </tr>
+                `;
+
+                        }
+
+                    } else {
+
+                        html += `
+                <tr>
+                    <td colspan="2" class="text-center">Aucun professeur pour l'instant!</td>
+                </tr>
+            `;
+
+                    }
+                    $('.seeTeachersTable').html(html);
+
+                }
+            });
+
+        });
+    </script>
 @endpush

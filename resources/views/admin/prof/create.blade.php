@@ -47,14 +47,23 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-md-6 mb-3">
-                                                <label for="">Societé</label>
-                                                <input type="text" name="company" class="form-control">
-                                                @error('company')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                            <div class="form-group col-md-6">
+                                                <label for="category_id">Société</label>
+                                                <div class="input-group mb-4">
+                                                    <select class="form-control" name="company_id" id="company_id">
+                                                        <option selected>--Selectionner une société--</option>
+                                                        @foreach ($companies as $company)
+                                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                       <label class="input-group-text" for="company_id">Société</label>
+                                                    </div>
+                                                 </div>
+                                                 @error('company_id')
+                                                     <small class="text-danger">{{ $message }}</small>
+                                                 @enderror
                                             </div>
-
                                             <div class="col-md-6 mb-3">
                                                 <label for="">Spécialité</label>
                                                 <input type="text" name="speciality" class="form-control">
@@ -78,6 +87,18 @@
                 
                                                 @error('password_confirmation')
                                                     <small class="text-danger">{{$message}}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Cours</label>
+                                                <select required class="form-control" name="course_id">
+                                                    <option value="">--Sélectionnez le cours--</option>
+                                                    @foreach ($courses as $course)
+                                                        <option value="{{ $course->id }}"> {{ $course->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('course_id')
+                                                    <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
 

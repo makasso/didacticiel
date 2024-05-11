@@ -2,28 +2,29 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LoginLink extends Mailable
+class NewProfCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $plainTextToken;
-    public $expiresAt;
+    public $user;
+    public $password;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($plainTextToken, $expiresAt)
+    public function __construct(User $user, string $password)
     {
-        $this->plainTextToken = $plainTextToken;
-        $this->expiresAt = $expiresAt;
+        
+        $this->user = $user;
+        $this->password = $password;
     }
 
     /**
@@ -32,7 +33,7 @@ class LoginLink extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Lien de connexion',
+            subject: 'Nouveau professeur créé',
         );
     }
 
@@ -56,14 +57,11 @@ class LoginLink extends Mailable
         return [];
     }
 
+    
     public function build()
     {
         return $this->subject(
-            config('app.name') . ' Vérification de connexion'
-        )->markdown('emails.login-link', [
-            'url' => URL::temporarySignedRoute('verify-login', $this->expiresAt, [
-                'token' => $this->plainTextToken,
-            ]),
-        ]);
+            config('app.name') . ' Nouveau prof créé'
+        )->markdown('emails.new-prof', ['user' => $this->user, 'password' => $this->password]);
     }
 }

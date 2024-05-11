@@ -38,29 +38,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <div class="input-group mb-4">
-                                                    <select class="form-control" name="user_id" id="user_id">
-                                                        <option label="--Selectionner un professeur--" selected value=""></option>
-                                                        @foreach ($users as $user)
-                                                            @if ($course->user_id)
-                                                            <option value="{{ $user->id }}"
-                                                                {{ $user->id == $course->user_id ? 'selected' : '' }}>
-                                                                {{ $user->name }}
-                                                            </option>
-                                                            @else
-                                                            <option value="{{ $user->id }}">
-                                                                {{ $user->name }}
-                                                            </option>
-                                                            @endif
-                                                            
-                                                        @endforeach
-                                                    </select>
-                                                    <div class="input-group-append">
-                                                        <label class="input-group-text" for="user_id">Profs</label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="form-group col-md-6">
                                                 <label for="">Nom</label>
                                                 <input type="text" name="name" class="form-control"

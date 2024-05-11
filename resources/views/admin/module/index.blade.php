@@ -151,7 +151,6 @@
 
         });
 
-
         // see question examen
         $('.seeQuestionModule').click(function(){
 

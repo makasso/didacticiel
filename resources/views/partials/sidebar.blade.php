@@ -3,13 +3,13 @@
         @auth
             <a href="{{ auth()->user()->role_as == '1' ? route('admin.dashboard') : route('prof.dashboard') }}"
                 class="header-logo d-flex align-items-center">
-                <h2 class="text-primary mr-1">D</h2>
+                <h2 class="text-primary mr-1">{{ Str::substr(config('app.name'), 0, 1) }}</h2>
                 <h4 class="logo-title light-logo">{{ config('app.name') }}</h4>
             </a>
         @endauth
         @guest
             <a href="#" class="header-logo d-flex align-items-center">
-                <h2 class="text-primary mr-1">D</h2>
+                <h2 class="text-primary mr-1">{{ Str::substr(config('app.name'), 0, 1) }}</h2>
                 <h4 class="logo-title light-logo">{{ config('app.name') }}</h4>
             </a>
         @endguest
@@ -108,6 +108,26 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="{{ request()->routeIs('admin.company.*') ? 'active' : '' }}">
+                            <a href="#companies" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="ri-building-fill"></i>
+                                <span class="ml-4">Sociétés</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="companies" class="iq-submenu collapse" data-parent="#companies">
+                                <li class="{{ request()->routeIs('admin.company.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.company.index') }}">
+                                        <i class="las la-minus"></i><span>Lister les sociétés</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.company.create') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.company.create') }}">
+                                        <i class="las la-minus"></i><span>Ajouter une société</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="{{ request()->routeIs('admin.prof.*') ? 'active' : '' }}">
                             <a href="#profs" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="ri-user-2-fill"></i>
@@ -180,6 +200,8 @@
                                 <span class="ml-4">Certificats</span>
                             </a>
                         </li>
+
+
                     @endif
 
                     @if (auth()->guard('student')->user())

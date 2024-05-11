@@ -43,7 +43,6 @@ class CourseController extends Controller
         // dans le model category
         $course = $category->coursesCategories()->insert([
             'category_id' => $validateData['category_id'],
-            'user_id' => $validateData['user_id'] ?? null,
             'name' => $validateData['name'],
             'copy_link'=> $myuid
         ]);
@@ -67,7 +66,6 @@ class CourseController extends Controller
 
         Course::find($course_id)->update([
             'category_id' => $validateData['category_id'],
-            'user_id' => $validateData['user_id'] ?? null,
             'name' => $validateData['name'],
         ]);
 
@@ -82,5 +80,17 @@ class CourseController extends Controller
 
         return redirect()->back()->withToastSuccess('Cours supprimé avec succès');
     }
+
+    public function getTeachers(Request $request)
+    {
+        $teachers = User::select('users.*')
+        ->join('user_course', 'users.id', '=', 'user_course.user_id')
+        ->join('courses', 'user_course.course_id', '=', 'courses.id')
+        ->where('courses.id', '=', $request->course_id)
+        ->get();
+
+        return response()->json(['success' => true, 'data' => $teachers]);
+    }
+    
 
 }

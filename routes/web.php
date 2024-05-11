@@ -57,6 +57,21 @@ Route::prefix('admin')
             Route::get('/prof/{user}/edit', 'edit')->name('admin.prof.edit');
             Route::put('/prof/{user}', 'update')->name('admin.prof.update');
             Route::delete('/prof/{user}/delete', 'destroy')->name('admin.prof.destroy');
+
+            Route::get('/prof/courses', 'getCourses')->name('admin.prof.courses');
+            Route::get('/prof/show-courses', 'showCourses')->name('admin.prof.show.courses');
+            Route::post('/prof/add-courses', 'addCourses')->name('admin.prof.add.courses');
+            Route::get('/prof/delete-course', 'deleteCourse')->name('admin.prof.delete.course');
+        });
+
+
+        Route::controller(App\Http\Controllers\Admin\CompanyController::class)->group(function() {
+            Route::get('/company', 'index')->name('admin.company.index');
+            Route::get('/company/create', 'create')->name('admin.company.create');
+            Route::post('/company', 'store')->name('admin.company.store');
+            Route::get('/company/{id}/edit', 'edit')->name('admin.company.edit');
+            Route::put('/company/{id}', 'update')->name('admin.company.update');
+            Route::delete('/company/{id}/delete', 'destroy')->name('admin.company.destroy');
         });
 
         // controller category
@@ -77,6 +92,7 @@ Route::prefix('admin')
             Route::get('/course/{course_id}/edit', 'edit')->name('admin.course.edit');
             Route::put('/course/{course_id}', 'update')->name('admin.course.update');
             Route::delete('/course/{course}/delete', 'destroy')->name('admin.course.destroy');
+            Route::get('/course/teachers', 'getTeachers')->name('admin.course.getTeachers');
         });
 
         // Route module

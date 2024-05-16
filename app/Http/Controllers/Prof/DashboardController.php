@@ -23,7 +23,10 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(10);
+        $courses = Course::select('courses.*')
+        ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+        ->join('users', 'users.id', '=', 'user_course.user_id')
+        ->where('user_course.user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
         return view('prof.course.index', compact('courses'));
     }
 

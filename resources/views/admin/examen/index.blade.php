@@ -54,7 +54,7 @@
                                                     data-target="#seeQnaModal" style="text-decoration: none">Afficher
                                                     Questions</a>
                                             </td>
-                                            <td class="d-flex justify-content-between">
+                                            <td class="">
                                                 <a href="#" data-id="{{ $examen->id }}" class="btn btn-success mr-1 updateExamen" data-toggle="modal"
                                                     data-target="#updateExamenModal">Modifier</a>
                                                 <a href="{{ route('admin.examen.destroy', $examen->id) }}"

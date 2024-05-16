@@ -93,7 +93,8 @@
 
                     if (data.success == true) {
 
-                        var questions = data.data;
+                        var questions = [];
+                        questions = data.data;
                         html = '';
                         if (questions.length > 0) {
 

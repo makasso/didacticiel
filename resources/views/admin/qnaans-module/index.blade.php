@@ -24,6 +24,7 @@
                                     <tr class="ligth">
                                         <th>N°</th>
                                         <th>Questions</th>
+                                        <th>Cours</th>
                                         <th>Réponses</th>
                                         <th>Actions</th>
                                     </tr>
@@ -34,12 +35,12 @@
                                             <tr>
                                                 <td>{{ $question->id }}</td>
                                                 <td>{{ $question->question }}</td>
+                                                <td>{{ \App\Models\Course::where('id', $question->course_id)->first()->name ?? 'Aucun Cours' }}</td>
                                                 <td>
                                                     <a href="#" class="ansButton" data-id="{{ $question->id }}"
                                                         data-toggle="modal" data-target="#showAnsModal"
                                                         style="text-decoration: none">Afficher réponses</a>
                                                 </td>
-
                                                 <td>
                                                     <button class="btn btn-success editButton" data-id="{{ $question->id }}"
                                                         data-toggle="modal" data-target="#editQnaModal">Modifier</button>

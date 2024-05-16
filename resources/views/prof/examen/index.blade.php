@@ -23,9 +23,7 @@
                                         <th>N°</th>
                                         <th>Nom</th>
                                         <th>Cours</th>
-                                        <th>Date</th>
-                                        <th>Durée</th>
-                                        <th>Essais</th>
+                                        <th>Date Création</th>
                                         <th>Questions</th>
                                     </tr>
                                 </thead>
@@ -43,8 +41,6 @@
 
                                             </td>
                                             <td>{{ $examen->date }}</td>
-                                            <td>{{ $examen->time }} Hrs</td>
-                                            <td>{{ $examen->attempt }} Fois</td>
                                             <td>
                                                 <a href="#" class="seeQuestion"
                                                     data-id="{{ $examen->id }}" data-toggle="modal"
@@ -54,7 +50,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="9" class="text-center">Aucun examen trouvé!</td>
+                                            <td colspan="7" class="text-center">Aucun examen trouvé!</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

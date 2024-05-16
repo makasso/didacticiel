@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\AnswerModule;
+use App\Models\Course;
+use App\Models\Module;
 use App\Models\QnaModule;
-use App\Models\QuestionModule;
+use App\Models\AnswerModule;
 use Illuminate\Http\Request;
+use App\Models\QuestionModule;
+use App\Http\Controllers\Controller;
 
 class QnAModuleController extends Controller
 {
@@ -15,9 +17,10 @@ class QnAModuleController extends Controller
     {
         // answers la fonction situer dans le model QuestionExamen
         $questions = QuestionModule::with('answers')->get();
+        $courses = Course::all();
 
         confirmDelete('Supprimer question?', 'Voulez-vous vraiment supprimer cette question');
-        return view('admin.qnaans-module.index', compact('questions'));
+        return view('admin.qnaans-module.index', compact('questions', 'courses'));
     }
 
 
@@ -32,7 +35,8 @@ class QnAModuleController extends Controller
         try {
 
             $questionId = QuestionModule::insertGetId([
-                'question' => $request->question
+                'question' => $request->question,
+                'course_id' => $request->course_id
             ]);
 
             foreach ($request->answers as $answer) {
@@ -144,8 +148,8 @@ class QnAModuleController extends Controller
     public function getQuestionsModule(Request $request)
     {
         try {
-            //code...
-            $questions = QuestionModule::all();
+            $course_id = Module::where('id', $request->module_id)->first()->course_id;
+            $questions = QuestionModule::where('question_modules.course_id', $course_id)->get();
 
             if (count($questions) > 0) {
                 # code...
@@ -153,7 +157,6 @@ class QnAModuleController extends Controller
                 $counter = 0;
 
                 foreach ($questions as $question) {
-
                     $qnaModule = QnaModule::where(['module_id'=>$request->module_id, 'question_id'=>$question->id])->get();
 
                     if (count($qnaModule) == 0) {
@@ -164,7 +167,6 @@ class QnAModuleController extends Controller
                 }
 
                 return response()->json(['success'=>true, 'message'=>'Questions data !', 'data'=>$data]);
-
 
             }
             else {

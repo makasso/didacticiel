@@ -37,7 +37,7 @@
         
                                             </td>
                                             <td>{{$course->name}}</td>
-                                            <td>{{$course->number_module}}</td>
+                                            <td>{{count($course->modulesCourses)}}</td>
                                             <td><a href="{{ route('prof.course.students', $course->id) }}">Liste des étudiants</a></td>
                                             <td>
                                                 <a href="#" data-code="{{ $course->copy_link }}" class="copy"><i class="ri-file-copy-fill"></i></a>

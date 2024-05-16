@@ -84,14 +84,14 @@
             <form id="addQna">
                 @csrf
                 <div class="modal-body">
-                    <div class="iq-search-bar device-search">
+                    {{-- <div class="iq-search-bar device-search">
                         <div class="searchbox w-100">
                             <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                             <input type="search" name="search" id="search" class="text search-input"
                                 placeholder="Recherchez...">
                             <input type="hidden" name="examen_id" id="addExamenId" class="form-control">
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- <input type="search" name="search" id="search" onkeyup="searchTableExamen()" class="w-100" placeholder="Search here"> --}}
                     <br /><br />

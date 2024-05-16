@@ -15,10 +15,21 @@
             <form id="addQna">
                 @csrf
                 <div class="modal-body addModalAnswers">
-                    <div class="row input-group mb-3">
+                    <div class="form-group mb-3">
                         <div class="col">
-                            <input type="text" class="form-control m-input" name="question" required placeholder="Entrer une question">
+                            <input type="text" class="form-control m-input" name="question" required placeholder="Entrez une question">
                         </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <select required class="form-control" name="course_id">
+                            <option value="">--Sélectionnez le cours--</option>
+                            @foreach ($courses as $course)
+                                <option value="{{ $course->id }}"> {{ $course->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('course_id')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -80,10 +91,10 @@
             <form id="editQna">
                 @csrf
                 <div class="modal-body editModalAnswers">
-                    <div class="row input-group mb-3">
+                    <div class="form-group mb-3">
                         <div class="col">
                             <input type="hidden" name="question_id" id="question_id">
-                            <input type="text" class="form-control m-input" name="question" id="question" required placeholder="Enter Question">
+                            <input type="text" class="form-control m-input" name="question" id="question" required placeholder="Entrez la question">
                         </div>
                     </div>
                 </div>

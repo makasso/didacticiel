@@ -14,6 +14,7 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Créer une catégorie</h4>
                                     </div>
+                                    <a href="{{ route('admin.category.index') }}" class="btn btn-primary float-end">Retour</a>
                                 </div>
                                 <div class="card-body">
 
@@ -36,27 +37,6 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-
-                                            <div class="form-group col-md-6">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="image" id="image">
-                                                    <label class="custom-file-label" for="image">Choisissez une image</label>
-                                                 </div>
-                                                @error('image')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <div class="custom-control custom-checkbox custom-checkbox-color custom-control-inline">
-                                                    <input type="checkbox" class="custom-control-input" name="status" id="status">
-                                                    <label class="custom-control-label" for="status">Statut</label>
-                                                 </div>
-                                                <div class="pt-2 pb-2"></div>
-                                                @error('status')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-
                                         </div>
                                         <button type="submit" class="btn btn-primary mr-2">Créer</button>
                                     </form>

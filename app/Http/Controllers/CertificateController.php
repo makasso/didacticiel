@@ -13,4 +13,12 @@ class CertificateController extends Controller
 
         return view('admin.certificate.index', compact('certificates'));
     }
+
+    public function show(int $id)
+    {
+        $certificate = ExamensAttempt::with(['student', 'examen'])->where(['status' => 'is_completed', 'id' => $id])->first();
+
+        return view('admin.certificate.show', compact('certificate'));
+    }
+
 }

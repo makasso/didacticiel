@@ -14,6 +14,7 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Créer Professeur</h4>
                                     </div>
+                                    <a href="{{ route('admin.prof.index') }}" class="btn btn-primary float-end">Retour</a>
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('admin.prof.store') }}" method="POST"
@@ -64,14 +65,6 @@
                                                      <small class="text-danger">{{ $message }}</small>
                                                  @enderror
                                             </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="">Spécialité</label>
-                                                <input type="text" name="speciality" class="form-control">
-                                                @error('speciality')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-
                                             <div class="col-md-6 mb-3">
                                                 <label for="password">Mot de passe</label>
                                                 <input id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">

@@ -40,7 +40,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="3">Pas de certficats pour l'instant</td>
+                                            <td  class="text-center" colspan="3">Aucun étudiant!</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

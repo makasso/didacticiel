@@ -29,14 +29,11 @@ class ModuleController extends Controller
         $request->validate([
             'name' => 'required|string',
             'course_id' => 'required|integer',
-            'attempt' => 'required|integer',
         ]);
 
         Module::create([
             'name' => $request->name,
             'course_id' => $request->course_id,
-            'attempt' => $request->attempt,
-            'status' => $request->status == 'on' ? '1' : '0'
         ]);
 
         return redirect('/admin/module')->withToastSuccess('Module créé avec succès');
@@ -51,20 +48,24 @@ class ModuleController extends Controller
         return view('admin.module.edit', compact('module', 'courses'));
     }
 
+    public function show(int $module_id)
+    {
+        $module = Module::find($module_id);
+        
+        return view('admin.module.show', compact('module',));
+    }
+
     public function update(Request $request, int $module_id)
     {
         $request->validate([
             'name' => 'required|string',
             'course_id' => 'required|integer',
-            'attempt' => 'required|integer',
         ]);
 
         Module::findOrFail($module_id)->update([
             'name' => $request->name,
             'course_id' => $request->course_id,
             'time' => $request->time,
-            'attempt' => $request->attempt,
-            'status' => $request->status == 'on' ? '1': '0'
         ]);
 
         return redirect('admin/module')->withToastSuccess('Module mis à jour avec succès!');

@@ -269,7 +269,7 @@
         </nav>
         @if (auth()->guard('student')->user())
             @isset($completion_percentage)
-                {{-- <div id="sidebar-bottom" class="position-relative sidebar-bottom">
+                <div id="sidebar-bottom" class="position-relative sidebar-bottom">
                     <div class="card border-none mb-0 shadow-none">
                         <div class="card-body p-0">
                             <div class="sidebarbottom-content">
@@ -291,7 +291,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             @endisset
         @endif
         <div class="pt-5 pb-2"></div>

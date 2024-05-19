@@ -23,6 +23,7 @@
                                         <th>Cours</th>
                                         <th>Professeur</th>
                                         <th>Date de délivrance</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,6 +38,7 @@
                                             <td>{{ $certificate->examen->coursesExamens->name }}</td>
                                             <td>{{ $certificate->examen->coursesExamens->user->name }}</td>
                                             <td>{{ $certificate->created_at->format('d-m-Y') }}</td>
+                                            <td><a href="{{ route('admin.certificate.show', $certificate->id) }}" class="btn btn-secondary">Afficher</a></td>
                                         </tr>
                                     @empty
                                         <tr>

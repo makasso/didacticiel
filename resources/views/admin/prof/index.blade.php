@@ -13,6 +13,7 @@
                         <div class="header-title">
                             <h4 class="card-title">Liste des Professeurs</h4>
                         </div>
+                        <a href="{{ route('admin.prof.create') }}" class="btn btn-primary float-end">Ajouter Professeur</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -24,7 +25,7 @@
                                         <th>Societé</th>
                                         <th>Date d'expiration</th>
                                         <th>Assigner Cours</th>
-                                        <th>Voir Cous</th>
+                                        <th>Afficher Cours</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -45,9 +46,10 @@
                                                     data-toggle="modal" data-target="#seeCoursesModal"
                                                     style="text-decoration: none">Afficher Cours</a>
                                             </td>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
                                                 <a href="{{ route('admin.prof.edit', $user) }}"
-                                                    class="btn btn-success">Modifier</a>
+                                                    class="btn btn-success mr-1">Modifier</a>
+                                                <a href="{{ route('admin.prof.show', $user) }}" class="btn btn-secondary mr-1">Afficher</a>    
                                                 <a href="{{ route('admin.prof.destroy', $user) }}"
                                                     data-confirm-delete="true" class="btn btn-danger">Supprimer</a>
                                             </td>

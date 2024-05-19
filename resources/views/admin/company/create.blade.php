@@ -14,6 +14,8 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Créer une société</h4>
                                     </div>
+                                    <a href="{{ route('admin.company.index') }}" class="btn btn-primary float-end">Retour</a>
+
                                 </div>
                                 <div class="card-body">
 

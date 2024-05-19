@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-8">
+            {{-- <div class="col-xl-8">
                 <div class="card-transparent card-block card-stretch card-height">
                     <div class="card-body p-0">
                         <div class="card">
@@ -165,7 +165,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- Page end  -->
     </div>

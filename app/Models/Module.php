@@ -18,8 +18,6 @@ class Module extends Model
         'course_id',
         'name',
         'time',
-        'attempt',
-        'status'
     ];
 
 

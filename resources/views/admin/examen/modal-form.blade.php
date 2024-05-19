@@ -1,6 +1,5 @@
 <!-- Modal update examen -->
-<div wire:ignore.self class="modal fade" id="updateExamenModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="updateExamenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,29 +34,6 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-
-                        <div class="mb-3">
-                            <label>Date</label>
-                            <input type="date" id="date" name="date" class="form-control"
-                                min="@php echo date('Y-m-d'); @endphp">
-                            @error('date')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Durée</label>
-                            <input type="time" id="time" name="time" class="form-control">
-                            @error('time')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Essais</label>
-                            <input type="number" id="attempt" min="1" name="attempt" class="form-control">
-                            @error('attempt')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -65,6 +41,36 @@
                         <button type="submit" class="btn btn-primary">Modifier</button>
                     </div>
                 </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal show examen -->
+<div class="modal fade" id="showExamenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showExamenName"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label>Cours</label>
+                    <input disabled type="text" id="examen_course" value="" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Nom Examen</label>
+                    <input type="text" id="examen_name" name="name" value="" class="form-control">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
             </div>
 
         </div>
@@ -84,16 +90,7 @@
             <form id="addQna">
                 @csrf
                 <div class="modal-body">
-                    {{-- <div class="iq-search-bar device-search">
-                        <div class="searchbox w-100">
-                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                            <input type="search" name="search" id="search" class="text search-input"
-                                placeholder="Recherchez...">
-                            <input type="hidden" name="examen_id" id="addExamenId" class="form-control">
-                        </div>
-                    </div> --}}
-
-                    {{-- <input type="search" name="search" id="search" onkeyup="searchTableExamen()" class="w-100" placeholder="Search here"> --}}
+                    <input type="hidden" name="examen_id" id="addExamenId" class="form-control">
                     <br /><br />
 
                     <table class="table" id="questionsTable">

@@ -19,24 +19,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-list align-items-center">
-
-                        <li class="nav-item nav-icon search-content">
-                            <a href="#" class="search-toggle rounded" id="dropdownSearch" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="ri-search-line"></i>
-                            </a>
-                            <div class="iq-search-bar iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownSearch">
-                                <form action="#" class="searchbox p-2">
-                                    <div class="form-group mb-0 position-relative">
-                                        <input type="text" class="text search-input font-size-12"
-                                            placeholder="type here to search...">
-                                        <a href="#" class="search-link"><i class="las la-search"></i></a>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <li class="nav-item nav-icon dropdown caption-content">
+                        <li class="nav-item nav-icon dropdown caption-content py-2">
                             <a href="#" class="search-toggle dropdown-toggle  d-flex align-items-center"
                                 id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
@@ -45,7 +28,7 @@
                                 <div class="caption ml-3">
                                     @auth
                                         <h6 class="mb-0 line-height">{{ auth()->user()->name }}
-                                            {{ isset(auth()->user()->role_as) ? (auth()->user()->role_as == '1' ? '(Admin)' : '(Prof)') : '(Etudiant)' }}<i
+                                            {{ isset(auth()->user()->role_as) ? (auth()->user()->role_as == '1' ? '(Administrateur)' : '(Professeur)') : '(Etudiant)' }}<i
                                                 class="las la-angle-down ml-2"></i></h6>
                                     @endauth
                                 </div>

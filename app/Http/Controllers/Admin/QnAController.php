@@ -36,8 +36,8 @@ class QnAController extends Controller
                 $counter = 0;
 
                 foreach ($questions as $question) {
-                    if (!QnaModule::where('question_id', $question->id)->exists()) {
-                        if (!QnaExam::where(['examen_id' => $request->examen_id, 'question_id' => $question->id])->exists()) {
+                    if (!QnaExam::where(['question_id' => $question->id])->exists()) {
+                            if (!QnaModule::where('question_id', $question->id)->exists()) {
                             $data[$counter]['id'] = $question->id;
                             $data[$counter]['question'] = $question->question;
                             $counter++;
@@ -45,9 +45,9 @@ class QnAController extends Controller
                     }
                 }
 
-                return response()->json(['success' => true, 'message' => 'Questions data !', 'data' => $data]);
+                return response()->json(['success' => true, 'message' => 'Questions trouvées', 'data' => $data]);
             } else {
-                return response()->json(['success' => false, 'message' => 'Aucune question trouvée!']);
+                return response()->json(['success' => true, 'message' => 'Aucune question trouvée!', 'data' => []]);
             }
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -60,7 +60,7 @@ class QnAController extends Controller
         try {
             if (isset($request->questions_ids)) {
                 foreach ($request->questions_ids as $qid) {
-                    QnaExam::insert([
+                    QnaExam::create([
                         'examen_id' => $request->examen_id,
                         'question_id' => $qid,
                     ]);
@@ -91,7 +91,7 @@ class QnAController extends Controller
     {
         try {
             QnaExam::where('id', $request->id)->delete();
-            return response()->json(['success' => true, 'message' => 'Questions Examen supprimé!']);
+            return response()->json(['success' => true, 'message' => 'Question Examen supprimé!']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -100,7 +100,6 @@ class QnAController extends Controller
     // marks for examen
     public function loadMarks()
     {
-        # code...
         $examens = Examen::with('getQnaExamens')->get();
         return view('admin.marks.index', compact('examens'));
     }

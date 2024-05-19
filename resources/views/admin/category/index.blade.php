@@ -12,27 +12,27 @@
                         <div class="header-title">
                             <h4 class="card-title">Liste des catégories</h4>
                         </div>
+                        <a href="{{ route('admin.category.create') }}" class="btn btn-primary float-end">Ajouter Catégorie</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr class="ligth">
-                                        <th>Id</th>
                                         <th>Nom</th>
-                                        <th>Statut</th>
+                                        <th>Description</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($categories as $category)
                                         <tr>
-                                            <td>{{ $category->id }}</td>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ $category->status == '1' ? 'Hidden' : 'Visible' }}</td>
-                                            <td class="d-flex align-items-center justify-content-start">
-                                                <a href="{{ url('admin/category/' . $category->id . '/edit') }}"
+                                            <td>{{ strlen($category->description) >= 100 ?  substr($category->description, 0, 100) . '...' : $category->description   }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.category.edit', $category->id) }}"
                                                     class="btn btn-success mr-1">Modifier</a>
+                                                <a href="{{ route('admin.category.show', $category->id) }}" class="btn btn-secondary">Afficher</a>    
                                                 <a href="{{ route('admin.category.destroy', $category) }}" data-confirm-delete="true" class="btn btn-danger btn-delete">Supprimer</a>    
                                             </td>
                                         </tr>

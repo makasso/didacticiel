@@ -23,6 +23,7 @@
                                         <th>Nombre Module</th>
                                         <th>Liste des étudiants</th>
                                         <th>Copié Lien</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,6 +43,7 @@
                                             <td>
                                                 <a href="#" data-code="{{ $course->copy_link }}" class="copy"><i class="ri-file-copy-fill"></i></a>
                                             </td>
+                                            <td><a href="{{ route('prof.course.show', $course->id) }}" class="btn btn-secondary">Afficher</a></td>
                                         </tr>
                                     @empty
                                         <tr>

@@ -58,6 +58,11 @@ class CategoryController extends Controller
         return view('admin.category.edit', compact('category'));
     }
 
+    public function show(Category $category)
+    {
+        return view('admin.category.show', compact('category'));
+    }
+
     // update category
     public function update(CategoryFormRequest $request, $category)
     {

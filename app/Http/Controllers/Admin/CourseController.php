@@ -60,6 +60,15 @@ class CourseController extends Controller
         return view('admin.course.edit', compact('categories', 'course', 'users'));
     }
 
+    public function show(int $course_id)
+    {
+        $course = Course::find($course_id);
+        $users = User::where('role_as', '0')->get();
+        $categories = Category::all();
+
+        return view('admin.course.show', compact('course', 'users', 'categories'));
+    }
+
     public function update(CourseFormRequest $request, int $course_id)
     {
         $validateData = $request->validated();

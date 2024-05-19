@@ -9,6 +9,7 @@ use App\Models\AnswerModule;
 use Illuminate\Http\Request;
 use App\Models\QuestionModule;
 use App\Http\Controllers\Controller;
+use App\Models\QnaExam;
 
 class QnAModuleController extends Controller
 {
@@ -158,8 +159,9 @@ class QnAModuleController extends Controller
 
                 foreach ($questions as $question) {
                     $qnaModule = QnaModule::where(['module_id'=>$request->module_id, 'question_id'=>$question->id])->get();
+                    $qnaExam = QnaExam::where(['question_id'=>$question->id])->get();
 
-                    if (count($qnaModule) == 0) {
+                    if (count($qnaModule) == 0 && count($qnaExam) == 0) {
                         $data[$counter]['id'] = $question->id;
                         $data[$counter]['question'] = $question->question;
                         $counter++;

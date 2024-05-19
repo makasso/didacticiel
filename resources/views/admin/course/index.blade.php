@@ -14,22 +14,24 @@
                         <div class="header-title">
                             <h4 class="card-title">Liste des cours</h4>
                         </div>
+                        <a href="{{ route('admin.course.create') }}" class="btn btn-primary float-end">Ajouter Cours</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr class="ligth">
-                                        <th>Catégorie</th>
                                         <th>Nom</th>
-                                        <th>Nombre Module</th>
-                                        <th>Prof</th>
+                                        <th>Catégorie</th>
+                                        <th>Nombre Modules</th>
+                                        <th>Professeurs</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($courses as $course)
                                         <tr>
+                                            <td>{{ $course->name }}</td>
                                             <td>
                                                 @if ($course->categoriesCourses)
                                                     {{ $course->categoriesCourses->name }}
@@ -38,7 +40,6 @@
                                                 @endif
 
                                             </td>
-                                            <td>{{ $course->name }}</td>
                                             <td>{{ $course->modulesCourses->count() }}</td>
                                             <td>
                                                 <a href="#" class="seeTeachers" data-id="{{ $course->id }}"
@@ -48,6 +49,8 @@
                                             <td>
                                                 <a href="{{ route('admin.course.edit', $course) }}"
                                                     class="btn btn-success">Modifier</a>
+
+                                                <a href="{{ route('admin.course.show', $course->id) }}" class="btn btn-secondary">Afficher</a>
                                                 <a href="{{ route('admin.course.destroy', $course) }}"
                                                     class="btn btn-danger" data-confirm-delete="true">Supprimer</a>
                                             </td>

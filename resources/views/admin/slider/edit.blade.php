@@ -14,6 +14,8 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Modifier Slide</h4>
                                     </div>
+                                    <a href="{{ route('admin.slider.index') }}" class="btn btn-primary float-end">Retour</a>
+
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('admin.slider.update', $slider) }}" method="POST"
@@ -32,14 +34,14 @@
                                                 <button class="nav-link" id="details-tab" data-toggle="tab"
                                                     data-target="#details-tab-pane" type="button" role="tab"
                                                     aria-controls="details-tab-pane" aria-selected="false">
-                                                    Slide Vidéo
+                                                    Slides Vidéos
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="image-tab" data-toggle="tab"
                                                     data-target="#image-tab-pane" type="button" role="tab"
                                                     aria-controls="image-tab-pane" aria-selected="false">
-                                                    Slide Image
+                                                    Slides Images
                                                 </button>
                                             </li>
 
@@ -50,6 +52,7 @@
                                                 <div class="form-group">
                                                     <label>Nom Module</label>
                                                     <select name="module_id" class="form-control">
+
                                                         @foreach ($modules as $module)
                                                             <option value="{{ $module->id }}"
                                                                 {{ $module->id == $slider->module_id ? 'selected' : '' }}>
@@ -71,7 +74,7 @@
                                                 <div class="form-group d-flex align-items-center col-md-6">
                                                     <div class="custom-control pt-4 custom-checkbox custom-checkbox-color custom-control-inline">
                                                         <input type="checkbox" class="custom-control-input" name="is_introduction" id="is_introduction" {{ $slider->is_introduction == '1' ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="is_introduction">Définir comme introduction</label>
+                                                        <label class="custom-control-label" for="is_introduction">Introduction (Le premier slide de présentation du module)</label>
                                                      </div>
                                                     <div class="pt-2 pb-2"></div>
                                                     @error('is_introduction')

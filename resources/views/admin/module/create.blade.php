@@ -14,6 +14,7 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Créer un module</h4>
                                     </div>
+                                    <a href="{{ route('admin.module.index') }}" class="btn btn-primary float-end">Retour</a>
                                 </div>
                                 <div class="card-body">
 
@@ -21,16 +22,18 @@
                                         @csrf
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label>Cours</label>
-                                                <select required class="form-control" name="course_id">
-                                                    <option value="">--Sélectionnez le cours--</option>
-                                                    @foreach ($courses as $course)
-                                                        <option value="{{ $course->id }}"> {{ $course->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('course_id')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <label for="course_id">Cours</label>
+                                                <div class="input-group mb-4">
+                                                    <select class="form-control" name="course_id" id="course_id">
+                                                        <option selected>--Selectionner Cours--</option>
+                                                        @foreach ($courses as $course)
+                                                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                       <label class="input-group-text" for="course_id">Cours</label>
+                                                    </div>
+                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Nom</label>
@@ -39,23 +42,7 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Nombre d'essais</label>
-                                                <input type="number" min="1" id="attempt" name="attempt" class="form-control">
-                                                @error('attempt')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group d-flex align-items-center col-md-6">
-                                                <div class="custom-control pt-4 custom-checkbox custom-checkbox-color custom-control-inline">
-                                                    <input type="checkbox" class="custom-control-input" name="status" id="status">
-                                                    <label class="custom-control-label" for="status">Statut</label>
-                                                 </div>
-                                                <div class="pt-2 pb-2"></div>
-                                                @error('status')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
+                                           
                                         </div>
                                         <button type="submit" class="btn btn-primary mr-2">Créer</button>
                                     </form>

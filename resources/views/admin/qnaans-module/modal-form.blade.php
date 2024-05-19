@@ -109,3 +109,30 @@
     </div>
     {{-- End modal edit question and answers --}}
     
+    <div class="modal fade" id="showQnaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header d-flex align-items-center justify-content-between">
+                <h5 class="modal-title" id="showModalName"></h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editQna">
+                @csrf
+                <div class="modal-body showModalAnswers">
+                    <div class="form-group mb-3">
+                        <div class="col">
+                            <input type="hidden" name="question_id" id="question_id">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="editError" style="color: red;"></span>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>

@@ -14,6 +14,8 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Créer un slide</h4>
                                     </div>
+                                    <a href="{{ route('admin.slider.index') }}" class="btn btn-primary float-end">Retour</a>
+
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('admin.slider.store') }}" method="POST" enctype="multipart/form-data">

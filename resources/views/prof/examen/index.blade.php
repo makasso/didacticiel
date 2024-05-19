@@ -20,17 +20,16 @@
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr class="light">
-                                        <th>N°</th>
                                         <th>Nom</th>
                                         <th>Cours</th>
                                         <th>Date Création</th>
                                         <th>Questions</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($examens as $examen)
                                         <tr>
-                                            <td>{{ $examen->id }}</td>
                                             <td>{{ $examen->name }}</td>
                                             <td>
                                                 @if ($examen->coursesExamens)
@@ -38,14 +37,16 @@
                                                 @else
                                                     Aucun cours
                                                 @endif
-
                                             </td>
                                             <td>{{ $examen->date }}</td>
                                             <td>
-                                                <a href="#" class="seeQuestion"
-                                                    data-id="{{ $examen->id }}" data-toggle="modal"
-                                                    data-target="#seeQnaModal" style="text-decoration: none">Afficher
+                                                <a href="#" class="seeQuestion" data-id="{{ $examen->id }}"
+                                                    data-toggle="modal" data-target="#seeQnaModal"
+                                                    style="text-decoration: none">Afficher
                                                     Questions</a>
+                                            </td>
+                                            <td>
+                                                <a href="#" data-id="{{ $examen->id }}" data-toggle="modal" data-target="#showExamenModal" class="btn btn-secondary show-examen">Afficher</a>
                                             </td>
                                         </tr>
                                     @empty
@@ -236,7 +237,6 @@
                             Toast.fire({
                                 title: data.message,
                                 icon: 'success',
-
                             });
                         } else {
                             Toast.fire({
@@ -271,7 +271,25 @@
                         $('#name').val(data.name);
                         $('#time').val(data.time);
                         $('#date').val(data.date);
-                       $('#attempt').val(data.attempt);
+                        $('#attempt').val(data.attempt);
+                    }
+                });
+            });
+
+            $('.show-examen').click(function() {
+                var showExamenId = $(this).attr('data-id');
+                $.ajax({
+                    url: "{{ route('prof.qna.index') }}",
+                    type: "GET",
+                    data: {
+                        id: showExamenId,
+                    },
+                    success: function(data) {
+                        var data = data.data
+
+                        $('#examen_course').val(data.course_id);
+                        $('#examen_name').val(data.name);
+                        $('#showExamenName').text('Examen ' + data.name);
                     }
                 });
             });
@@ -287,4 +305,3 @@
         });
     </script>
 @endpush
-

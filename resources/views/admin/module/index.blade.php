@@ -13,16 +13,15 @@
                         <div class="header-title">
                             <h4 class="card-title">Liste des Modules</h4>
                         </div>
+                        <a href="{{ route('admin.module.create') }}" class="btn btn-primary float-end">Ajouter Module</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr class="ligth">
-                                        <th>N°</th>
                                         <th>Nom</th>
                                         <th>Cours</th>
-                                        <th>Essais</th>
                                         <th>Ajouter quiz</th>
                                         <th>Afficher Quiz</th>
                                         <th>Actions</th>
@@ -31,7 +30,6 @@
                                 <tbody>
                                     @forelse ($modules as $module)
                                         <tr>
-                                            <td>{{ $module->id }}</td>
                                             <td>{{ $module->name }}</td>
                                             <td>
                                                 @if ($module->coursesModules)
@@ -40,23 +38,22 @@
                                                     Aucun cours
                                                 @endif
         
-                                            </td>
-                                            <td>{{ $module->attempt }} fois</td>
-        
+                                            </td>        
                                             <td>
                                                 <a href="#" class="addQuestionModule" data-id="{{ $module->id }}" data-toggle="modal" data-target="#addQuizModalModule" style="text-decoration: none">Ajouter Question</a>
                                             </td>
                                             <td>
                                                 <a href="#" class="seeQuestionModule" data-id="{{ $module->id }}" data-toggle="modal" data-target="#seeQuizModalModule" style="text-decoration: none">Afficher Questions</a>
                                             </td>
-                                            <td class="d-flex">
+                                            <td>
                                                 <a href="{{ route('admin.module.edit', $module->id) }}" class="btn btn-success mr-1">Modifier</a>
+                                                <a href="{{ route('admin.module.show', $module->id) }}" class="btn btn-secondary">Afficher</a>
                                                 <a href="{{ route('admin.module.destroy', $module->id) }}" class="btn btn-danger" data-confirm-delete="true" data-toggle="modal">Supprimer</a>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8">Aucun module trouvé</td>
+                                            <td colspan="7">Aucun module trouvé</td>
                                         </tr>
                                     @endforelse
         

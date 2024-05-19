@@ -30,11 +30,32 @@ class DashboardController extends Controller
         return view('prof.course.index', compact('courses'));
     }
 
+    public function showCourse($course_id)
+    {
+        $course = Course::select('courses.*')
+        ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+        ->join('users', 'users.id', '=', 'user_course.user_id')
+        ->where('user_course.user_id', Auth::user()->id)->where('courses.id', $course_id)->orderBy('id', 'DESC')->first();
+        return view('prof.course.show', compact('course'));
+    }
+
     public function indexExamen()
     {
         $examens = Examen::orderBy('id', 'DESC')->get();
         $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+
         return view('prof.examen.index', compact('examens', 'courses'));
+    }
+
+    public function getExamen(Request $request)
+    {
+        try {
+            $examen = Examen::with('coursesExamens')->find($request->id);
+
+            return response()->json(['success' => true, 'message' => 'Examen', 'data' => $examen]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
     public function students(int $course_id)

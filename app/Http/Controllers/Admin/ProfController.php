@@ -38,7 +38,6 @@ class ProfController extends Controller
         $request->validate([
             'name' => 'string|required|min:2',
             'company_id' => 'int|required',
-            'speciality' => 'string|required|min:2',
             'email'=> 'string|email|required|max:100|unique:users',
             'password' => 'string|required|confirmed|min:6',
             'expiry_date' => 'required',
@@ -52,7 +51,6 @@ class ProfController extends Controller
 
             $user->name = $request->name;
             $user->company_id = $request->company_id;
-            $user->speciality = $request->speciality;
             $user->email = $request->email;
             $user->expiry_date = $request->expiry_date;
             $user->speciality = $request->speciality;
@@ -91,17 +89,21 @@ class ProfController extends Controller
         return view('admin.prof.edit', compact('user', 'courses', 'companies'));
     }
 
+    public function show(User $user)
+    {
+        return view('admin.prof.show', compact('user'));
+    }
+
     // update prof
     public function update(Request $request, $user)
     {
+        $user = User::findOrFail($user);
+
         $request->validate([
             'name' => 'string|min:2',
             'company_id' => 'int|required',
-            'speciality' => 'string|min:2',
-            'email'=> 'string|email|max:100',
+            'email' => 'required|email|unique:users,email,' . $user->id,
         ]);
-
-        $user = User::findOrFail($user);
 
         $user->name = $request->name;
         $user->company_id = $request->company_id;

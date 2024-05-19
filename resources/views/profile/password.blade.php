@@ -54,7 +54,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="password_confirmation">Nouveau mot de passe:</label>
+                                                <label for="password_confirmation">Confirmer nouveau mot de passe:</label>
                                                 <input type="password" class="form-control" id="password_confirmation"
                                                     name="password_confirmation" required>
                                                 <div class="pt-2 pb-2"></div>

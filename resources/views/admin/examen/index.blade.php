@@ -14,13 +14,14 @@
                         <div class="header-title">
                             <h4 class="card-title">Liste des Examens</h4>
                         </div>
+                        <a href="{{ route('admin.examen.create') }}" class="btn btn-primary float-end">Ajouter Examen</a>
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr class="light">
-                                        <th>N°</th>
                                         <th>Nom</th>
                                         <th>Cours</th>
                                         <th>Ajouter Question</th>
@@ -31,7 +32,6 @@
                                 <tbody>
                                     @forelse ($examens as $examen)
                                         <tr>
-                                            <td>{{ $examen->id }}</td>
                                             <td>{{ $examen->name }}</td>
                                             <td>
                                                 @if ($examen->coursesExamens)
@@ -49,14 +49,17 @@
                                                     Question</a>
                                             </td>
                                             <td>
-                                                <a href="#" class="seeQuestion"
-                                                    data-id="{{ $examen->id }}" data-toggle="modal"
-                                                    data-target="#seeQnaModal" style="text-decoration: none">Afficher
+                                                <a href="#" class="seeQuestion" data-id="{{ $examen->id }}"
+                                                    data-toggle="modal" data-target="#seeQnaModal"
+                                                    style="text-decoration: none">Afficher
                                                     Questions</a>
                                             </td>
                                             <td class="">
-                                                <a href="#" data-id="{{ $examen->id }}" class="btn btn-success mr-1 updateExamen" data-toggle="modal"
+                                                <a href="#" data-id="{{ $examen->id }}"
+                                                    class="btn btn-success mr-1 updateExamen" data-toggle="modal"
                                                     data-target="#updateExamenModal">Modifier</a>
+                                                <a href="#" data-id="{{ $examen->id }}" data-toggle="modal"
+                                                    data-target="#showExamenModal" class="btn btn-secondary show-examen">Afficher</a>
                                                 <a href="{{ route('admin.examen.destroy', $examen->id) }}"
                                                     class="btn btn-danger" data-confirm-delete="true" data-toggle="modal"
                                                     data-target="#deleteExamenModal">Supprimer</a>
@@ -126,6 +129,7 @@
                             $('.addBody').html(html);
 
                         } else {
+                            $('.addBody').html(html);
 
                         }
 
@@ -291,7 +295,26 @@
                         $('#name').val(data.name);
                         $('#time').val(data.time);
                         $('#date').val(data.date);
-                       $('#attempt').val(data.attempt);
+                        $('#attempt').val(data.attempt);
+                    }
+                });
+            });
+
+            $('.show-examen').click(function() {
+
+                var showExamenId = $(this).attr('data-id');
+                $.ajax({
+                    url: "{{ route('admin.qna.index') }}",
+                    type: "GET",
+                    data: {
+                        id: showExamenId,
+                    },
+                    success: function(data) {
+                        var data = data.data
+
+                        $('#examen_course').val(data.course_id);
+                        $('#examen_name').val(data.name);
+                        $('#showExamenName').text('Examen ' + data.name);
                     }
                 });
             });

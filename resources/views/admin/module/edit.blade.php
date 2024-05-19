@@ -14,6 +14,7 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Modifier module</h4>
                                     </div>
+                                    <a href="{{ route('admin.module.index') }}" class="btn btn-primary float-end">Retour</a>
                                 </div>
                                 <div class="card-body">
 
@@ -40,24 +41,6 @@
                                                 <label>Nom</label>
                                                 <input type="text" name="name" class="form-control" value="{{$module->name}}">
                                                 @error('name')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Nombre d'essais</label>
-                                                <input type="number" min="1" id="attempt" name="attempt" class="form-control" value="{{$module->attempt}}">
-                                                @error('attempt')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-    
-                                            <div class="form-group col-md-6">
-                                                <div class="custom-control pt-5 custom-checkbox custom-checkbox-color custom-control-inline">
-                                                    <input type="checkbox" class="custom-control-input" name="status" id="status" {{ $module->status == '1' ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="status">Statut</label>
-                                                 </div>
-                                                <div class="pt-2 pb-2"></div>
-                                                @error('status')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>

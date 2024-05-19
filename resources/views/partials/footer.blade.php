@@ -11,10 +11,10 @@
  <script async src="{{ asset('assets/js/chart-custom.js') }}"></script>
  <!-- Chart Custom JavaScript -->
  <script async src="{{ asset('assets/js/slider.js') }}"></script>
-
  <!-- app JavaScript -->
  <script src="{{ asset('assets/js/app.js') }}"></script>
  <script src="{{ asset('assets/vendor/moment.min.js') }}"></script>
+
  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
@@ -32,7 +32,6 @@
          position: "top-end",
          showConfirmButton: false,
          timer: 3000,
-         showTimer: true,
          timerProgressBar: true,
          didOpen: (toast) => {
              toast.onmouseenter = Swal.stopTimer;
@@ -45,10 +44,10 @@
          $('.modal-backdrop').remove();
      }
 
-     $('.data-table').DataTable({
-         language: {
-             url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/fr-FR.json',
-         },
+    //  $('.data-table').DataTable({
+    //      language: {
+    //          url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/fr-FR.json',
+    //      },
 
-     });
+    //  });
  </script>

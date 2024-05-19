@@ -22,7 +22,6 @@
                             <table id="datatable" class="table data-table table-striped">
                                 <thead>
                                     <tr class="ligth">
-                                        <th>N°</th>
                                         <th>Questions</th>
                                         <th>Cours</th>
                                         <th>Réponses</th>
@@ -33,9 +32,9 @@
                                     @if (count($questions) > 0)
                                         @foreach ($questions as $question)
                                             <tr>
-                                                <td>{{ $question->id }}</td>
                                                 <td>{{ $question->question }}</td>
-                                                <td>{{ \App\Models\Course::where('id', $question->course_id)->first()->name ?? 'Aucun Cours' }}</td>
+                                                <td>{{ \App\Models\Course::where('id', $question->course_id)->first()->name ?? 'Aucun Cours' }}
+                                                </td>
                                                 <td>
                                                     <a href="#" class="ansButton" data-id="{{ $question->id }}"
                                                         data-toggle="modal" data-target="#showAnsModal"
@@ -44,6 +43,9 @@
                                                 <td>
                                                     <button class="btn btn-success editButton" data-id="{{ $question->id }}"
                                                         data-toggle="modal" data-target="#editQnaModal">Modifier</button>
+                                                    <button class="btn btn-secondary showButton" data-id="{{ $question->id }}"
+                                                        data-toggle="modal" data-target="#showQnaModal">Afficher</button>
+
                                                     <a href="{{ route('admin.qnaans-module.deleteQna', $question->id) }}"
                                                         class="btn btn-danger deleteButton" data-confirm-delete="true"
                                                         data-id="{{ $question->id }}" data-toggle="modal"
@@ -272,6 +274,53 @@
 
                         `;
                             $('.editModalAnswers').append(html);
+                        }
+                    }
+                });
+
+            });
+
+            $(".showButton").click(function() {
+
+                var qid = $(this).attr('data-id');
+
+                $.ajax({
+                    url: "{{ route('admin.qnaans-module.getQnaDetails') }}",
+                    type: "GET",
+                    data: {
+                        qid: qid
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        var qna = data.data[0];
+
+                        $("#question_id").val(qna['id']);
+                        $("#question").val(qna['question']);
+                        $("#showModalName").text('Question: ' + qna['question']);
+
+
+                        var html = '';
+
+                        for (let i = 0; i < qna['answers'].length; i++) {
+                            $(".showAnswers").remove();
+                            var checked = '';
+
+                            if (qna['answers'][i]['is_correct'] == 1) {
+                                checked = 'checked';
+                            }
+
+                            html += `
+            <div class="input-group mb-3 mt-2 editAnswers">
+                <input disabled type="radio" name="is_correct" class="edit_is_correct" ` + checked + `>
+                <div class="col">
+                    <input disabled type="text" class="form-control m-input" name="answers[` + qna['answers'][i]
+                                ['id'] + `]"
+                    value="` + qna['answers'][i]['answer'] + `" required placeholder="Entrer la réponse">
+                </div>
+            </div>
+
+        `;
+                            $('.showModalAnswers').append(html);
                         }
                     }
                 });

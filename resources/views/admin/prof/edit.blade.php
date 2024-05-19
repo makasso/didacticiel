@@ -14,6 +14,8 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Modifier Professeur</h4>
                                     </div>
+                                    <a href="{{ route('admin.prof.index') }}" class="btn btn-primary float-end">Retour</a>
+
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ url('admin/prof/' . $user->id) }}" method="POST"
@@ -68,16 +70,6 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label for="">Spécialité</label>
-                                                <input type="text" name="speciality" value="{{ $user->speciality }}"
-                                                    class="form-control">
-                                                @error('speciality')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-
                                             <div class="col-md-12 mb-3">
                                                 <button type="submit" class="btn btn-primary float-end">Modifier</button>
                                             </div>

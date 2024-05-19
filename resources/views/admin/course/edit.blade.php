@@ -14,6 +14,8 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Modifier Cours</h4>
                                     </div>
+                                    <a href="{{ route('admin.course.index') }}" class="btn btn-primary float-end">Retour</a>
+
                                 </div>
                                 <div class="card-body">
 
@@ -22,6 +24,7 @@
                                         @csrf
                                         <div class="row align-items-center">
                                             <div class="form-group col-md-6">
+                                                <label for="category_id">Catégorie</label>
                                                 <div class="input-group mb-4">
                                                     <select class="form-control" name="category_id" id="category_id"
                                                         required>

@@ -57,6 +57,7 @@ Route::prefix('admin')
             Route::get('/prof/{user}/edit', 'edit')->name('admin.prof.edit');
             Route::put('/prof/{user}', 'update')->name('admin.prof.update');
             Route::delete('/prof/{user}/delete', 'destroy')->name('admin.prof.destroy');
+            Route::get('/prof/{user}/', 'show')->name('admin.prof.show');
 
             Route::get('/prof/courses', 'getCourses')->name('admin.prof.courses');
             Route::get('/prof/show-courses', 'showCourses')->name('admin.prof.show.courses');
@@ -72,6 +73,8 @@ Route::prefix('admin')
             Route::get('/company/{id}/edit', 'edit')->name('admin.company.edit');
             Route::put('/company/{id}', 'update')->name('admin.company.update');
             Route::delete('/company/{id}/delete', 'destroy')->name('admin.company.destroy');
+            Route::get('/company/{id}/', 'show')->name('admin.company.show');
+
         });
 
         // controller category
@@ -82,6 +85,8 @@ Route::prefix('admin')
             Route::get('/category/{category}/edit', 'edit')->name('admin.category.edit');
             Route::put('/category/{category}', 'update')->name('admin.category.update');
             Route::delete('/category/{category}', 'destroy')->name('admin.category.destroy');
+            Route::get('/category/{category}/', 'show')->name('admin.category.show');
+
         });
 
         // controller course
@@ -93,6 +98,8 @@ Route::prefix('admin')
             Route::put('/course/{course_id}', 'update')->name('admin.course.update');
             Route::delete('/course/{course}/delete', 'destroy')->name('admin.course.destroy');
             Route::get('/course/teachers', 'getTeachers')->name('admin.course.getTeachers');
+            Route::get('/course/{course_id}/', 'show')->name('admin.course.show');
+
         });
 
         // Route module
@@ -102,6 +109,8 @@ Route::prefix('admin')
         Route::get('/module/{module_id}/edit', [ModuleController::class, 'edit'])->name('admin.module.edit');
         Route::put('/module/{module_id}/update', [ModuleController::class, 'update'])->name('admin.module.update');
         Route::delete('/module/{module_id}/delete', [ModuleController::class, 'destroy'])->name('admin.module.destroy');
+        Route::get('/module/{module_id}/', [ModuleController::class, 'show'])->name('admin.module.show');
+
 
         // controller Q&A Module
         Route::controller(App\Http\Controllers\Admin\QnAModuleController::class)->group(function () {
@@ -128,6 +137,7 @@ Route::prefix('admin')
             Route::get('/slider/{slider}/edit', 'edit')->name('admin.slider.edit');
             Route::put('/slider/{slider}', 'update')->name('admin.slider.update');
             Route::delete('/slider/{slider_id}/delete', 'destroy')->name('admin.slider.delete');
+            Route::get('/slider/{slider_id}/', 'show')->name('admin.slider.show');
 
             Route::get('/slider-image/{slider_image_id}/delete', 'destroyImage')->name('admin.slider.delete-image');
             Route::get('/slider-videos/{slider_video_id}/delete', 'destroyVideo')->name('admin.slider.delete-video');
@@ -143,6 +153,8 @@ Route::prefix('admin')
             Route::post('/examen/create', 'store')->name('admin.examen.store');
             Route::put('/examen/{examen_id}/update', 'update')->name('admin.examen.update');
             Route::delete('/examen/{examen_id}/delete', 'destroy')->name('admin.examen.destroy');
+            Route::get('/examen/{examen_id}/', 'show')->name('admin.examen.show');
+
         });
 
         // controller Q&A Examen
@@ -157,6 +169,8 @@ Route::prefix('admin')
 
         // Certificate Controller
         Route::get('/certificates', [CertificateController::class, 'index'])->name('admin.certificate');
+        Route::get('/certificates/{certificate_id}/', [CertificateController::class, 'show'])->name('admin.certificate.show');
+
     });
 
 Route::prefix('prof')
@@ -166,8 +180,13 @@ Route::prefix('prof')
         Route::controller(App\Http\Controllers\Prof\DashboardController::class)->group(function () {
             Route::get('/dashboard', 'dashboard')->name('prof.dashboard');
             Route::get('/course', 'index')->name('prof.course.index');
+            Route::get('/course/{course_id}', 'showCourse')->name('prof.course.show');
             Route::get('/examen', 'indexExamen')->name('prof.examen.index');
+            Route::get('/examen/{examen_id}', 'showExamen')->name('prof.examen.show');
             Route::get('/course/{course_id}/students', 'students')->name('prof.course.students');
+
+            Route::get('/qna-exam', 'getExamen')->name('prof.qna.index');
+
         });
 
         Route::controller(App\Http\Controllers\Admin\QnAController::class)->group(function () {
@@ -180,6 +199,7 @@ Route::prefix('prof')
             Route::put('/profile/edit', 'updateProfileUser')->name('profile.prof.edit');
             Route::put('/profile/password', 'updatePasswordUser')->name('profile.prof.password');
         });
+        
     });
 
 // controller frontend

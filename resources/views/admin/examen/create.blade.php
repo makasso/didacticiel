@@ -14,6 +14,7 @@
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Créer un examen</h4>
                                     </div>
+                                    <a href="{{ route('admin.examen.index') }}" class="btn btn-primary float-end">Retour</a>
                                 </div>
                                 <div class="card-body">
 

@@ -99,6 +99,14 @@ class SliderController extends Controller
     }
 
 
+    public function show(int $slider_id)
+    {
+        $slider = Slider::findOrFail($slider_id);
+
+        return view('admin.slider.show', compact('slider'));
+    }
+
+
     public function update(SliderFormRequest $request, int $slider_id)
     {
         $validateData = $request->validated();

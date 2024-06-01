@@ -46,7 +46,7 @@
                                                     data-toggle="modal" data-target="#seeCoursesModal"
                                                     style="text-decoration: none">Afficher Cours</a>
                                             </td>
-                                            <td class="d-flex justify-content-between">
+                                            <td>
                                                 <a href="{{ route('admin.prof.edit', $user) }}"
                                                     class="btn btn-success mr-1">Modifier</a>
                                                 <a href="{{ route('admin.prof.show', $user) }}" class="btn btn-secondary mr-1">Afficher</a>    

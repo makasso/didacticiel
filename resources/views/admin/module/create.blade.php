@@ -26,8 +26,13 @@
                                                 <div class="input-group mb-4">
                                                     <select class="form-control" name="course_id" id="course_id">
                                                         <option selected>--Selectionner Cours--</option>
-                                                        @foreach ($courses as $course)
+                                                        @foreach ($categories as $category)
+                                                            <optgroup label="{{ $category->name }}">
+                                                                @foreach ($category->coursesCategories as $course)
                                                             <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                                        @endforeach
+                                                            </optgroup>
+                                                            
                                                         @endforeach
                                                     </select>
                                                     <div class="input-group-append">

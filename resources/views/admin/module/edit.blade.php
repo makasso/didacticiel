@@ -25,12 +25,14 @@
                                             <div class="form-group col-md-6">
                                                 <label>Cours</label>
                                                 <select required class="form-control" name="course_id">
-                                                    <option value="">--Sélectionnez le cours--</option>
-                                                    @foreach ($courses as $course)
-                                                            <option value="{{ $course->id }}"
-                                                                {{ $course->id == $module->course_id ? 'selected' : '' }}>
-                                                                {{ $course->name }}
-                                                            </option>
+                                                    <option selected>--Selectionner Cours--</option>
+                                                        @foreach ($categories as $category)
+                                                            <optgroup label="{{ $category->name }}">
+                                                                @foreach ($category->coursesCategories as $course)
+                                                            <option value="{{ $course->id }}" {{ $course->id == $module->course_id ? 'selected' : '' }}>{{ $course->name }}</option>
+                                                        @endforeach
+                                                            </optgroup>
+                                                            
                                                         @endforeach
                                                 </select>
                                                 @error('course_id')

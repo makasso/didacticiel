@@ -43,8 +43,9 @@
                                                 <td>
                                                     <button class="btn btn-success editButton" data-id="{{ $question->id }}"
                                                         data-toggle="modal" data-target="#editQnaModal">Modifier</button>
-                                                    <button class="btn btn-secondary showButton" data-id="{{ $question->id }}"
-                                                        data-toggle="modal" data-target="#showQnaModal">Afficher</button>
+                                                    <button class="btn btn-secondary showButton"
+                                                        data-id="{{ $question->id }}" data-toggle="modal"
+                                                        data-target="#showQnaModal">Afficher</button>
 
                                                     <a href="{{ route('admin.qnaans-module.deleteQna', $question->id) }}"
                                                         class="btn btn-danger deleteButton" data-confirm-delete="true"
@@ -115,6 +116,9 @@
                                         icon: 'success',
 
                                     });
+                                    setTimeout(function() {
+                                        window.location.reload();
+                                    }, 3000);
                                 } else {
                                     Toast.fire({
                                         title: data.message,
@@ -188,7 +192,7 @@
 
                             html += `
                             <tr>
-                                <td> ` + (j + i) + `</td>
+                                <td> ` + (j + 1) + `</td>
                                 <td> ` + questions[i]['answers'][j]['answer'] + `</td>
                                 <td> ` + is_correct + `</td>
                             </tr>
@@ -226,8 +230,6 @@
                 }
 
             });
-
-
 
             // button edit submittion
             $(".editButton").click(function() {
@@ -283,6 +285,7 @@
             $(".showButton").click(function() {
 
                 var qid = $(this).attr('data-id');
+                $('.showModalAnswers').empty();
 
                 $.ajax({
                     url: "{{ route('admin.qnaans-module.getQnaDetails') }}",
@@ -310,18 +313,21 @@
                             }
 
                             html += `
-            <div class="input-group mb-3 mt-2 editAnswers">
-                <input disabled type="radio" name="is_correct" class="edit_is_correct" ` + checked + `>
-                <div class="col">
-                    <input disabled type="text" class="form-control m-input" name="answers[` + qna['answers'][i]
+                                <div class="input-group mb-3 mt-2 editAnswers">
+                                    <input disabled type="radio" name="is_correct" class="edit_is_correct" ` +
+                                checked + `>
+                                    <div class="col">
+                                        <input disabled type="text" class="form-control m-input" name="answers[` + qna[
+                                    'answers'][i]
                                 ['id'] + `]"
-                    value="` + qna['answers'][i]['answer'] + `" required placeholder="Entrer la réponse">
-                </div>
-            </div>
+                                        value="` + qna['answers'][i]['answer'] + `" required placeholder="Entrer la réponse">
+                                    </div>
+                                </div>
 
-        `;
-                            $('.showModalAnswers').append(html);
+                            `;
                         }
+                        $('.showModalAnswers').append(html);
+
                     }
                 });
 

@@ -12,6 +12,7 @@
                 <!-- Slides -->
     
                 @forelse ($slider as $sl)
+                    <h3 class="title my-2">{{ $sl->name }}</h3>
                     @foreach (\App\Models\SliderImage::where('slider_id', $sl->id)->get() as $image)
                         <div class="swiper-slide">
                             <img src="{{ url($image->image) }}" class="img-fluid w-100"

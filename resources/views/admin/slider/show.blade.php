@@ -57,16 +57,7 @@
                                                         class="form-control">
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label>Description</label>
-                                                    <textarea name="description" class="form-control" rows="4" disabled>{{ $slider->description }}</textarea>
-                                                </div>
-                                                <div class="form-group d-flex align-items-center col-md-6">
-                                                    <div class="custom-control pt-4 custom-checkbox custom-checkbox-color custom-control-inline">
-                                                        <input disabled type="checkbox" class="custom-control-input" name="is_introduction" id="is_introduction" {{ $slider->is_introduction == '1' ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="is_introduction">Introduction (Le premier slide de présentation du module)</label>
-                                                     </div>
-                                                </div>
+                                                
                                             </div>
                                             <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
                                                 aria-labelledby="details-tab" tabindex="0">

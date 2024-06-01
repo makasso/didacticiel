@@ -21,7 +21,6 @@
                                         <th>Matricule Certificat</th>
                                         <th>Etudiant</th>
                                         <th>Cours</th>
-                                        <th>Professeur</th>
                                         <th>Date de délivrance</th>
                                         <th>Action</th>
                                     </tr>
@@ -36,13 +35,12 @@
                                                 {{ $certificate->student->firstname . ' ' . $certificate->student->lastname }}
                                             </td>
                                             <td>{{ $certificate->examen->coursesExamens->name }}</td>
-                                            <td>{{ $certificate->examen->coursesExamens->user->name }}</td>
                                             <td>{{ $certificate->created_at->format('d-m-Y') }}</td>
                                             <td><a href="{{ route('admin.certificate.show', $certificate->id) }}" class="btn btn-secondary">Afficher</a></td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5">Pas de certficats pour l'instant</td>
+                                            <td colspan="6" class="text-center">Pas de certficats pour l'instant</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

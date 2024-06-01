@@ -7,8 +7,8 @@
             <img src="{{asset('assets/images/error/404.png')}}" class="img-fluid iq-error-img" alt="">
             <h2 class="mb-0 mt-4">Oops! Page non autorisée.</h2>
             <p>Vous n'êtes pas autorisé à accéder à la page demandé.</p>
-            <a class="btn btn-primary d-inline-flex align-items-center mt-3" href="{{ url('/login-student') }}"><i
-                class="ri-home-4-line"></i>Revenir à l'accueil</a>
+            {{-- <a class="btn btn-primary d-inline-flex align-items-center mt-3" href="{{ url('/login-student') }}"><i
+                class="ri-home-4-line"></i>Revenir à l'accueil</a> --}}
         </div>
     </div>
 </div>

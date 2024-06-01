@@ -22,7 +22,8 @@
                                         <th>Nom</th>
                                         <th>Nombre Module</th>
                                         <th>Liste des étudiants</th>
-                                        <th>Copié Lien</th>
+                                        <th>Afficher Modules</th>
+                                        <th>Copier Lien</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -40,6 +41,7 @@
                                             <td>{{$course->name}}</td>
                                             <td>{{count($course->modulesCourses)}}</td>
                                             <td><a href="{{ route('prof.course.students', $course->id) }}">Liste des étudiants</a></td>
+                                            <td><a href="{{ route('prof.course.get-modules', $course->id) }}">Liste des modules</a></td>
                                             <td>
                                                 <a href="#" data-code="{{ $course->copy_link }}" class="copy"><i class="ri-file-copy-fill"></i></a>
                                             </td>

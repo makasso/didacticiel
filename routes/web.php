@@ -37,9 +37,7 @@ Route::get('/home', function () {
     redirect('/admin/dashboard');
 })->middleware(['auth', 'isAdmin']);
 
-Route::prefix('admin')
-    ->middleware(['isAdmin', 'auth'])
-    ->group(function () {
+Route::prefix('admin')->middleware(['isAdmin', 'auth'])->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
         Route::controller(App\Http\Controllers\Login\LoginUserController::class)->group(function () {
@@ -49,8 +47,13 @@ Route::prefix('admin')
             Route::put('/profile/password', 'updatePasswordUser')->name('admin.profile.password');
         });
 
-        // controller du prof
         Route::controller(App\Http\Controllers\Admin\ProfController::class)->group(function () {
+
+            Route::get('/prof/courses', 'getCourses')->name('admin.prof.courses');
+            Route::get('/prof/show-courses', 'showCourses')->name('admin.prof.show.courses');
+            Route::post('/prof/add-courses', 'addCourses')->name('admin.prof.add.courses');
+            Route::get('/prof/delete-course', 'deleteCourse')->name('admin.prof.delete.course');
+            
             Route::get('/prof', 'index')->name('admin.prof.index');
             Route::get('/prof/create', 'create')->name('admin.prof.create');
             Route::post('/prof/create', 'store')->name('admin.prof.store');
@@ -59,10 +62,6 @@ Route::prefix('admin')
             Route::delete('/prof/{user}/delete', 'destroy')->name('admin.prof.destroy');
             Route::get('/prof/{user}/', 'show')->name('admin.prof.show');
 
-            Route::get('/prof/courses', 'getCourses')->name('admin.prof.courses');
-            Route::get('/prof/show-courses', 'showCourses')->name('admin.prof.show.courses');
-            Route::post('/prof/add-courses', 'addCourses')->name('admin.prof.add.courses');
-            Route::get('/prof/delete-course', 'deleteCourse')->name('admin.prof.delete.course');
         });
 
 
@@ -181,6 +180,8 @@ Route::prefix('prof')
             Route::get('/dashboard', 'dashboard')->name('prof.dashboard');
             Route::get('/course', 'index')->name('prof.course.index');
             Route::get('/course/{course_id}', 'showCourse')->name('prof.course.show');
+            Route::get('/course/{course_id}/modules', 'getModules')->name('prof.course.get-modules');
+            Route::get('/course/{course_id}/modules/{module_id}', 'showModule')->name('prof.course.show-module');
             Route::get('/examen', 'indexExamen')->name('prof.examen.index');
             Route::get('/examen/{examen_id}', 'showExamen')->name('prof.examen.show');
             Route::get('/course/{course_id}/students', 'students')->name('prof.course.students');

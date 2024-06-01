@@ -22,7 +22,6 @@
                                     <tr class="light">
                                         <th>Nom</th>
                                         <th>Cours</th>
-                                        <th>Date Création</th>
                                         <th>Questions</th>
                                         <th>Action</th>
                                     </tr>
@@ -38,7 +37,6 @@
                                                     Aucun cours
                                                 @endif
                                             </td>
-                                            <td>{{ $examen->date }}</td>
                                             <td>
                                                 <a href="#" class="seeQuestion" data-id="{{ $examen->id }}"
                                                     data-toggle="modal" data-target="#seeQnaModal"

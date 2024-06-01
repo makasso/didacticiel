@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Helpers\Helper;
 use App\Models\Company;
 use App\Models\UserCourse;
+use Illuminate\Support\Str;
 use App\Mail\NewProfCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,10 +38,10 @@ class ProfController extends Controller
     {
         $request->validate([
             'name' => 'string|required|min:2',
-            'company_id' => 'int|required',
+            'company_id' => 'required',
             'email'=> 'string|email|required|max:100|unique:users',
             'password' => 'string|required|confirmed|min:6',
-            'expiry_date' => 'required',
+            'expiry_date' => 'required|date|after:today',
             'course_id' => 'required',
         ]);
 
@@ -61,10 +62,13 @@ class ProfController extends Controller
             $user->password = Hash::make($request->password);
     
             $user->save();
+
+            $myuid = Str::random(128);
     
             UserCourse::create([
                 'user_id' => $user->id,
                 'course_id' => $request->course_id,
+                'copy_link' => $myuid,
             ]);
     
             Mail::to($user->email)->send(new NewProfCreated($user, $request->password));
@@ -72,7 +76,7 @@ class ProfController extends Controller
             
  
         } catch (\Exception $e) {
-            return redirect('admin/prof')->withToastError('Une erreur est survenue');
+            return redirect('admin/prof')->withToastError('Une erreur est survenue: ' . $e->getMessage());
         }
 
         return redirect('admin/prof')->withToastSuccess('Un nouveau prof a été ajouté avec succès');
@@ -149,12 +153,15 @@ class ProfController extends Controller
 
     public function addCourses(Request $request)
     {
+        $myuid = Str::random(128);
+
         if (isset($request->courses_ids)) {
 
             foreach ($request->courses_ids as $course_id) {
                 UserCourse::insert([
                     'user_id' => $request->user_id,
                     'course_id' => $course_id,
+                    'copy_link' => $myuid,
                 ]);
             }
 

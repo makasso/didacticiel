@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('title')
-    Liste des Etudiants
+    Liste des Modules
 @endsection
+@include('admin.module.modal-form')
 
 @section('content')
     <div class="container-fluid">
@@ -10,7 +11,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Liste des étudiants</h4>
+                            <h4 class="card-title">Liste des Modules</h4>
                         </div>
                         <a href="{{ route('prof.course.index') }}"
                             class="btn btn-primary float-end">Retour</a>
@@ -21,30 +22,33 @@
                                 <thead>
                                     <tr class="ligth">
                                         <th>Nom</th>
-                                        <th>Prénom</th>
-                                        <th>Progression</th>
+                                        <th>Cours</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($students as $student)
+                                    @forelse ($modules as $module)
                                         <tr>
+                                            <td>{{ $module->name }}</td>
                                             <td>
-                                                {{ $student->student->firstname }}
-                                            </td>
+                                                @if ($module->coursesModules)
+                                                    {{ $module->coursesModules->name }}
+                                                @else
+                                                    Aucun cours
+                                                @endif
+        
+                                            </td>        
+                                            
                                             <td>
-                                                {{ $student->student->lastname }}
+                                                <a href="{{ route('prof.course.show-module', ['course_id' => $module->course_id, 'module_id' => $module->id]) }}" class="btn btn-secondary">Afficher</a>
                                             </td>
-                                            @if ($student->is_completed == 1)
-                                            <td class="text-success">Terminé</td>
-                                            @else
-                                            <td class="text-warning">En cours</td>
-                                            @endif
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td  class="text-center" colspan="3">Aucun étudiant!</td>
+                                            <td colspan="7">Aucun module trouvé</td>
                                         </tr>
                                     @endforelse
+        
                                 </tbody>
                             </table>
                         </div>
@@ -53,26 +57,13 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('scripts')
-    <script>
-        $(document).ready(function() {
-            var language = require('datatables.net-plugins/i18n/fr-FR.js');
 
-            $('#datatable').DataTable({
-                "paging": true,
-                "ordering": true,
-                "info": true,
-                "searching": true,
-                language: {
-                    url: 'cdn.datatables.net/plug-ins/2.0.5/i18n/fr-FR.json',
-                },
-                "columnDefs": [{
-                    "searchable": false,
-                    "targets": [1, 2, 3, 4, 5],
-                }, ]
-            });
-        });
-    </script>
+<script>
+
+</script>
+ 
 @endpush

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\SliderFormRequest;
+use App\Models\Category;
 
 class SliderController extends Controller
 {
@@ -24,7 +25,8 @@ class SliderController extends Controller
     public function create()
     {
         $courses = Course::with('modulesCourses')->get();
-        return view('admin.slider.create', compact('courses'));
+        $categories = Category::all();
+        return view('admin.slider.create', compact('courses', 'categories'));
     }
 
     public function store(SliderFormRequest $request)
@@ -36,8 +38,6 @@ class SliderController extends Controller
         $slider = $module->slidersModules()->create([
             'module_id' => $validateData['module_id'],
             'name' => $validateData['name'],
-            'description' => $validateData['description'],
-            'is_introduction' => $request->is_introduction == 'on' ? '1' : '0'
 
         ]);
 
@@ -94,8 +94,9 @@ class SliderController extends Controller
     {
         $modules = Module::all();
         $slider = Slider::findOrFail($slider_id);
+        $categories = Category::all();
 
-        return view('admin.slider.edit', compact('modules', 'slider'));
+        return view('admin.slider.edit', compact('modules', 'slider', 'categories'));
     }
 
 
@@ -121,8 +122,6 @@ class SliderController extends Controller
             $slider->update([
                 'module_id' => $validateData['module_id'],
                 'name' => $validateData['name'],
-                'description' => $validateData['description'],
-                'is_introduction' => $request->is_introduction == 'on' ? '1' : '0'
             ]);
 
 
@@ -171,11 +170,11 @@ class SliderController extends Controller
                     ]);
                 }
             }
-            return redirect('admin/slider')->with('message', 'Slider Added Succesfully');
+            return redirect('admin/slider')->withToastSuccess('Slide mis à jour avec succès');
         }
         else
         {
-            return redirect('admin/slider')->with('message', 'No Such Slider Id Found');
+            return redirect('admin/slider')->withToastError('Une erreur est survenue');
         }
     }
 

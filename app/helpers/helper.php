@@ -26,5 +26,3 @@ class Helper
         return $prefix.'-'.$zero.$last_number;
     }
 }
-
-?>

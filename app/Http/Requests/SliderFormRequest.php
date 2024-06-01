@@ -34,7 +34,7 @@ class SliderFormRequest extends FormRequest
                 'string'
             ],
             'description'=>[
-                'required',
+                'nullable',
                 'string'
             ],
             'image'=>[

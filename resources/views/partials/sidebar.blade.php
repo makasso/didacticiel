@@ -200,8 +200,6 @@
                                 <span class="ml-4">Certificats</span>
                             </a>
                         </li>
-
-
                     @endif
 
                     @if (auth()->guard('student')->user())
@@ -209,7 +207,6 @@
                             <a href="{{ url('cours/' . $course->copy_link) }}" class="mr-2">
                                 <i class="ri-book-open-fill"></i>
                                 <span class="ml-2">{{ $course->name }}</span>
-                                <i class="ri-alert-fill ml-2"></i>
                             </a>
 
                         </li>
@@ -268,32 +265,26 @@
             </ul>
         </nav>
         @if (auth()->guard('student')->user())
-            @isset($completion_percentage)
-                <div id="sidebar-bottom" class="position-relative sidebar-bottom">
-                    <div class="card border-none mb-0 shadow-none">
-                        <div class="card-body p-0">
-                            <div class="sidebarbottom-content">
-                                <h5 class="mb-3">Taux de complétion des modules</h5>
-                                <div id="circle-progress-6"
-                                    class="sidebar-circle circle-progress circle-progress-primary mb-4" data-min-value="0"
-                                    data-max-value="100" data-value="{{ $completion_percentage }}" data-type="percent"
-                                    role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                    aria-valuenow="{{ $completion_percentage }}"><svg version="1.1" width="100"
-                                        height="100" viewBox="0 0 100 100" class="circle-progress">
-                                        <circle class="circle-progress-circle" cx="50" cy="50" r="47"
-                                            fill="none" stroke="#ddd" stroke-width="8"></circle>
-                                        <path d="M 50 3 A 47 47 0 1 1 35.47620126437745 94.69965626587222"
-                                            class="circle-progress-value" fill="none" stroke="#00E699"
-                                            stroke-width="8"></path><text class="circle-progress-text" x="50" y="50"
-                                            font="16px Arial, sans-serif" text-anchor="middle" fill="#999"
-                                            dy="0.4em">{{ $completion_percentage }}%</text>
-                                    </svg></div>
-                            </div>
-                        </div>
+            {{-- @isset($completion_percentage)
+                <div class="sidebarbottom-content">
+                    <h5 class="mb-3">Taux de completion des modules</h5>
+                    <div id="circle-progress-6" class="sidebar-circle circle-progress circle-progress-primary mb-4"
+                        data-min-value="0" data-max-value="100" data-value="{{ $completion_percentage }}"
+                        data-type="percent" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                        aria-valuenow="{{ $completion_percentage }}">
+                        <svg version="1.1" width="100" height="100" viewBox="0 0 100 100"
+                            class="circle-progress">
+                            <circle class="circle-progress-circle" cx="50" cy="50" r="47" fill="none"
+                                stroke="#ddd" stroke-width="8"></circle>
+                            <path d="M 50 3 A 47 47 0 1 1 35.47620126437745 94.69965626587222"
+                                class="circle-progress-value" fill="none" stroke="#00E699" stroke-width="8"></path>
+                            <text class="circle-progress-text" x="50" y="50" font="16px Arial, sans-serif"
+                                text-anchor="middle" fill="#999" dy="0.4em">{{ $completion_percentage }}%</text>
+                        </svg>
                     </div>
                 </div>
-            @endisset
+            @endisset --}}
         @endif
-        <div class="pt-5 pb-2"></div>
-    </div>
+    <div class="pt-5 pb-2"></div>
+</div>
 </div>

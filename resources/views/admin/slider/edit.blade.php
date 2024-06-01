@@ -52,12 +52,17 @@
                                                 <div class="form-group">
                                                     <label>Nom Module</label>
                                                     <select name="module_id" class="form-control">
-
-                                                        @foreach ($modules as $module)
-                                                            <option value="{{ $module->id }}"
-                                                                {{ $module->id == $slider->module_id ? 'selected' : '' }}>
-                                                                {{ $module->name }}
-                                                            </option>
+                                                        @foreach ($categories as $category)
+                                                            <optgroup label="{{ $category->name }}">
+                                                                @foreach ($category->coursesCategories as $course)
+                                                            <optgroup label="{{ $course->name }}">
+                                                                @foreach ($course->modulesCourses as $module)
+                                                                    <option value="{{ $module->id }}" {{ $module->id == $slider->module_id ? 'selected' : '' }}>{{ $module->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        @endforeach
+                                                        </optgroup>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -65,21 +70,6 @@
                                                     <label>Nom Slide</label>
                                                     <input type="text" name="name" value="{{ $slider->name }}"
                                                         class="form-control">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Description</label>
-                                                    <textarea name="description" class="form-control" rows="4">{{ $slider->description }}</textarea>
-                                                </div>
-                                                <div class="form-group d-flex align-items-center col-md-6">
-                                                    <div class="custom-control pt-4 custom-checkbox custom-checkbox-color custom-control-inline">
-                                                        <input type="checkbox" class="custom-control-input" name="is_introduction" id="is_introduction" {{ $slider->is_introduction == '1' ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="is_introduction">Introduction (Le premier slide de présentation du module)</label>
-                                                     </div>
-                                                    <div class="pt-2 pb-2"></div>
-                                                    @error('is_introduction')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"

@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class ModuleController extends Controller
 {
@@ -20,8 +21,9 @@ class ModuleController extends Controller
 
     public function create(Request $request)
     {
+        $categories = Category::all();
         $courses = Course::all();
-        return view('admin.module.create', compact('courses'));
+        return view('admin.module.create', compact('courses', 'categories'));
     }
 
     public function store(Request $request)
@@ -44,8 +46,9 @@ class ModuleController extends Controller
     {
         $module = Module::where('id', $module_id)->first();
         $courses = Course::All();
+        $categories = Category::all();
 
-        return view('admin.module.edit', compact('module', 'courses'));
+        return view('admin.module.edit', compact('module', 'courses', 'categories'));
     }
 
     public function show(int $module_id)

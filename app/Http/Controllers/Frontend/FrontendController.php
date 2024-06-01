@@ -84,9 +84,10 @@ class FrontendController extends Controller
     // frontend course
     public function frondtendCourse($copy_link)
     {
-        $course = Course::with(['modulesCourses', 'categoriesCourses', 'user'])
-            ->where('copy_link', $copy_link)
-            ->oldest()
+        $course = Course::select(['courses.*', 'user_course.copy_link'])
+            ->with(['modulesCourses', 'categoriesCourses', 'user'])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where('user_course.copy_link', $copy_link)
             ->first();
 
         if (!StudentModule::where('student_id', Auth::id())->first()) {
@@ -113,13 +114,24 @@ class FrontendController extends Controller
             ->where(['student_module.student_id' => Auth::id(), 'student_module.is_completed' => 1, 'courses.copy_link' => $copy_link])
             ->count();
 
-        $completion_percentage = ($completed_modules * 100) / $count_modules;
+        $completion_percentage = $completed_modules > 0 ? ($completed_modules * 100) / $count_modules : 0;
 
         $slider = Slider::select(['sliders.*'])
             ->join('modules', 'modules.id', 'sliders.module_id')
             ->join('courses', 'modules.course_id', '=', 'courses.id')
-            ->where(['sliders.is_introduction' => 1, 'courses.copy_link' => $copy_link])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where(['sliders.is_introduction' => 1, 'user_course.copy_link' => $copy_link])
             ->get();
+
+        if (count($slider) == 0) {
+            $slider = Slider::select(['sliders.*'])
+            ->join('modules', 'modules.id', 'sliders.module_id')
+            ->join('courses', 'modules.course_id', '=', 'courses.id')
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where(['user_course.copy_link' => $copy_link])
+            ->oldest()
+            ->take(1);
+        }    
 
         if ($course) {
             return view('frontend.course.index', compact('course', 'student_modules', 'completion_percentage', 'count_modules', 'completed_modules', 'slider'));
@@ -132,10 +144,15 @@ class FrontendController extends Controller
         $module = Module::with(['slidersModules', 'coursesModules'])
             ->select('modules.*')
             ->join('courses', 'modules.course_id', '=', 'courses.id')
-            ->where(['modules.id' => $module_id, 'courses.copy_link' => $copy_link])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where(['modules.id' => $module_id, 'user_course.copy_link' => $copy_link])
             ->first();
 
-        $course = Course::with('modulesCourses')->where('copy_link', $copy_link)->first();    
+        $course = Course::select(['courses.*', 'user_course.copy_link'])
+            ->with(['modulesCourses', 'categoriesCourses', 'user'])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where('user_course.copy_link', $copy_link)
+            ->first();
 
         if (StudentModule::where('module_id', '<', $module_id)->where('is_completed', '=', 0)->where('student_id', '=', Auth::id())->orderBy('module_id', 'desc')->first()) {
             abort('403');
@@ -144,16 +161,18 @@ class FrontendController extends Controller
         $count_modules = \App\Models\StudentModule::select('student_module.*')
             ->join('modules', 'student_module.module_id', 'modules.id')
             ->join('courses', 'modules.course_id', 'courses.id')
-            ->where(['student_module.student_id' => Auth::id(), 'courses.copy_link' => $copy_link])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where(['student_module.student_id' => Auth::id(), 'user_course.copy_link' => $copy_link])
             ->count();
 
         $completed_modules = \App\Models\StudentModule::select('student_module.*')
             ->join('modules', 'student_module.module_id', 'modules.id')
             ->join('courses', 'modules.course_id', 'courses.id')
-            ->where(['student_module.student_id' => Auth::id(), 'student_module.is_completed' => 1, 'courses.copy_link' => $copy_link])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where(['student_module.student_id' => Auth::id(), 'student_module.is_completed' => 1, 'user_course.copy_link' => $copy_link])
             ->count();
 
-        $completion_percentage = ($completed_modules * 100) / $count_modules;
+        $completion_percentage = $completed_modules > 0 ? ($completed_modules * 100) / $count_modules : 0;
 
         $countModuleAttempts = ModulesAttempt::where([
             'module_id' => $module_id,
@@ -171,7 +190,6 @@ class FrontendController extends Controller
 
     public function completeModule($module_id)
     {
-       
         return redirect()->back()->withToastSuccess('Félicitations vous avez terminé ce module!');
     }
 
@@ -227,26 +245,54 @@ class FrontendController extends Controller
 
     public function passExamen($copy_link)
     {
-        $course = Course::where('copy_link', $copy_link)->first();
-        $examen = Examen::where('course_id', $course->id)->pluck('id')->random();
-
-        if (ExamensAttempt::join('examens', 'examens_attempt.examen_id', 'examens.id')
+        $course = Course::select(['courses.*', 'user_course.copy_link'])
+            ->with(['modulesCourses', 'categoriesCourses', 'user'])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where('user_course.copy_link', $copy_link)
+            ->first();
+        if (Examen::where('course_id', $course->id)->exists()) {
+            $examen = Examen::where('course_id', $course->id)->pluck('id')->random();
+        } else {
+            return redirect()->back()->withToastError('Pas encore d\'examen pour ce cours!');
+        }    
+               if (
+            ExamensAttempt::join('examens', 'examens_attempt.examen_id', 'examens.id')
                 ->join('courses', 'examens.course_id', 'courses.id')
                 ->where(['student_id' => Auth::id(), 'courses.id' => $course->id, 'is_completed' => 1])
-                ->exists()) {
+                ->exists()
+        ) {
             return redirect()->back()->withToastError('Vous avez déjà passé un examen pour ce cours!');
         }
 
-        $questions = QuestionModule::with('answers')->select('question_modules.*')->join('qna_exams', 'question_modules.id', 'qna_exams.question_id')->join('examens', 'qna_exams.examen_id', 'examens.id')->join('courses', 'examens.course_id', 'courses.id')->where(['examens.id' => $examen])->get()->toArray();
+        $questions = QuestionModule::with('answers')
+            ->select('question_modules.*')
+            ->join('qna_exams', 'question_modules.id', 'qna_exams.question_id')
+            ->join('examens', 'qna_exams.examen_id', 'examens.id')
+            ->join('courses', 'examens.course_id', 'courses.id')
+            ->where(['examens.id' => $examen])
+            ->get()
+            ->toArray();
 
         return view('frontend.examen.index', compact('course', 'questions', 'examen'));
     }
 
     public function getExamen(Request $request, $copy_link)
     {
-        $course = Course::where('copy_link', $copy_link)->first();
+        $course = Course::select(['courses.*', 'user_course.copy_link'])
+            ->with(['modulesCourses', 'categoriesCourses', 'user'])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where('user_course.copy_link', $copy_link)
+            ->first();
 
-        $questions = QuestionModule::with('answers')->select('question_modules.*')->join('qna_exams', 'question_modules.id', 'qna_exams.question_id')->join('examens', 'qna_exams.examen_id', 'examens.id')->join('courses', 'examens.course_id', 'courses.id')->where(['examens.id' => $request->examen_id])->inRandomOrder()->get()->toArray();
+        $questions = QuestionModule::with('answers')
+            ->select('question_modules.*')
+            ->join('qna_exams', 'question_modules.id', 'qna_exams.question_id')
+            ->join('examens', 'qna_exams.examen_id', 'examens.id')
+            ->join('courses', 'examens.course_id', 'courses.id')
+            ->where(['examens.id' => $request->examen_id])
+            ->inRandomOrder()
+            ->get()
+            ->toArray();
         $newQuestions = [];
         $index = 1;
 
@@ -258,7 +304,8 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'data' => $newQuestions]);
     }
 
-    public function completeExamen(Request $request, $copy_link) {
+    public function completeExamen(Request $request, $copy_link)
+    {
         $examen_attempt = ExamensAttempt::create([
             'examen_id' => $request->examen_id,
             'student_id' => Auth::id(),
@@ -266,35 +313,38 @@ class FrontendController extends Controller
         ]);
 
         $student = Student::find(Auth::id());
-        $course = Course::with('user')->where('copy_link', $copy_link)->first();
-        $examen = Examen::find($request->examen_id);    
+        $course = Course::select(['courses.*', 'user_course.copy_link'])
+            ->with(['modulesCourses', 'categoriesCourses', 'user'])
+            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+            ->where('user_course.copy_link', $copy_link)
+            ->first();
+        $examen = Examen::find($request->examen_id);
 
-        $percentage = ( (int) $request->marks * 100) / $request->number_questions;
+        $percentage = ((int) $request->marks * 100) / $request->number_questions;
 
         if ($percentage >= 70) {
-
             $examen_attempt_certificate = date('Ymd') . Str::random(14);
             ExamensAttempt::where('id', $examen_attempt->id)->update([
                 'is_completed' => 1,
-                'certificate_id' => $examen_attempt_certificate
+                'certificate_id' => $examen_attempt_certificate,
             ]);
 
             return view('frontend.examen.result', compact('student', 'course', 'percentage', 'examen', 'examen_attempt_certificate'));
         }
         return view('frontend.examen.result', compact('student', 'course', 'percentage', 'examen'));
-
     }
 
     public function generateCertificate($examen_id, $student_id, $certificate_id)
     {
-        $examen =  Examen::find($examen_id);
-        $course = Course::with('user')->where('id', $examen->course_id)->first();
-        $student =  Student::find($student_id);
+        $examen = Examen::find($examen_id);
+        $course = Course::with('user')
+            ->where('id', $examen->course_id)
+            ->first();
+        $student = Student::find($student_id);
 
         $pdf = \PDF::loadView('certficate.index', compact('examen', 'course', 'student', 'certificate_id'));
         $pdf->setPaper('A4', 'landscape');
         return $pdf->download(uniqid('certificat') . '.pdf');
-        
     }
 
     public function updateProfileStudent(Request $request)
@@ -305,7 +355,6 @@ class FrontendController extends Controller
 
         $student = Student::where('id', '=', auth()->id())->first();
         $student->name = $request->name;
-
         $student->save();
 
         return redirect()->back()->withToastSuccess('Votre profil a été mis à jour avec succès');

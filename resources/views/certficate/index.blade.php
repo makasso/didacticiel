@@ -14,7 +14,7 @@
 body{
 	  margin:0;
   	padding:0;
-  	border:1mm solid #74C69D;
+  	border:1mm solid #176B87;
   	height:188mm;
 }
 
@@ -24,7 +24,7 @@ body{
     top:-6mm;
     height:200mm;
     width:267mm;
-    border:1mm solid #74C69D;
+    border:1mm solid #176B87;
   	/* http://www.heropatterns.com/ */
 	  background-color: #d6d6e4;
 	  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h16v2h-6v6h6v8H8v-6H2v6H0V0zm4 4h2v2H4V4zm8 8h2v2h-2v-2zm-8 0h2v2H4v-2zm8-8h2v2h-2V4z' fill='%23991B1B' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
@@ -36,12 +36,12 @@ body{
   	top:10mm;
     height:178mm;
     width:245mm;
-    border:1mm solid #74C69D;
+    border:1mm solid #176B87;
   	background:white;
 }
 
 .inner-content{
-	  border:1mm solid #74C69D;
+	  border:1mm solid #176B87;
   	margin:4mm;
   	padding:10mm;
     height:148mm;
@@ -61,14 +61,14 @@ h2{
   	margin-top:0;
   	padding-bottom:1mm;
   	display:inline-block;
-  	border-bottom:1mm solid #74C69D;
+  	border-bottom:1mm solid #176B87;
 }
 
 h2::after{
 	  content:"";
   	display:block;
   	padding-bottom:4mm;
-  	border-bottom:1mm solid #74C69D;
+  	border-bottom:1mm solid #176B87;
 }
 
 h3{

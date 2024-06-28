@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Vimeo\Laravel\VimeoServiceProvider::class,
 
     ])->toArray(),
 
@@ -189,6 +190,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'PDF' => \Barryvdh\DomPDF\Facade::class,
+        'Vimeo' => Vimeo\Laravel\Facades\Vimeo::class,
 
     ])->toArray(),
 

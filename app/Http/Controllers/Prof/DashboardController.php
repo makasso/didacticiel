@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Prof;
 
+use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Examen;
-use App\Models\Slider;
-use Illuminate\Http\Request;
 use App\Models\ExamensAttempt;
-use App\Http\Controllers\Controller;
 use App\Models\Module;
+use App\Models\Slider;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -34,13 +35,13 @@ class DashboardController extends Controller
             'courses.name',
             'courses.category_id',
             'user_course.copy_link'
-            ])
+        ])
             ->join('user_course', 'courses.id', '=', 'user_course.course_id')
             ->join('users', 'users.id', '=', 'user_course.user_id')
             ->where('user_course.user_id', Auth::user()->id)
             ->orderBy('courses.id', 'DESC')
             ->get();
-            
+
 
         return view('prof.course.index', compact('courses'));
     }
@@ -55,7 +56,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'DESC')
             ->first();
 
-            $slider = Slider::select(['sliders.*'])
+        $slider = Slider::select(['sliders.*'])
             ->join('modules', 'modules.id', 'sliders.module_id')
             ->join('courses', 'modules.course_id', '=', 'courses.id')
             ->where(['sliders.is_introduction' => 1, 'courses.id' => $course->id])
@@ -63,12 +64,12 @@ class DashboardController extends Controller
 
         if (count($slider) == 0) {
             $slider = Slider::select(['sliders.*'])
-            ->join('modules', 'modules.id', 'sliders.module_id')
-            ->join('courses', 'modules.course_id', '=', 'courses.id')
-            ->where(['courses.id' => $course->id])
-            ->oldest()
-            ->take(1);
-        }        
+                ->join('modules', 'modules.id', 'sliders.module_id')
+                ->join('courses', 'modules.course_id', '=', 'courses.id')
+                ->where(['courses.id' => $course->id])
+                ->oldest()
+                ->take(1);
+        }
         return view('prof.course.show', compact('course', 'slider'));
     }
 
@@ -81,9 +82,29 @@ class DashboardController extends Controller
 
     public function showModule(int $course_id, int $module_id)
     {
-        $module = Module::with(['slidersModules','coursesModules'])->where('course_id', $course_id)->where('id', $module_id)->first();
+        $module = Module::with(['slidersModules', 'coursesModules'])->where('course_id', $course_id)->where('id', $module_id)->first();
 
         return view('prof.module.show', compact('module'));
+    }
+
+    public function getSliders()
+    {
+        $sliders = Slider::select('sliders.*')->join('modules', 'sliders.module_id', 'modules.id')
+            ->join('courses', 'modules.course_id', 'courses.id')
+            ->join('user_course', 'courses.id', 'user_course.course_id')
+            ->join('users', 'user_course.user_id', 'users.id')
+            ->where('user_course.user_id', Auth::user()->id)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return view('prof.slider.index', compact('sliders'));
+    }
+
+    public function showSlider(int $slider_id)
+    {
+        $slider = Slider::findOrFail($slider_id);
+
+        return view('prof.slider.show', compact('slider'));
     }
 
     public function indexExamen()
@@ -104,7 +125,7 @@ class DashboardController extends Controller
             $examen = Examen::with('coursesExamens')->find($request->id);
 
             return response()->json(['success' => true, 'message' => 'Examen', 'data' => $examen]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }

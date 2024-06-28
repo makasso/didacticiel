@@ -13,6 +13,7 @@ class SliderVideo extends Model
 
     protected $fillable = [
         'slider_id',
-        'videos'
+        'videos',
+        'video_id',
     ];
 }

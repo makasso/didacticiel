@@ -1,16 +1,14 @@
 <div class="iq-sidebar  sidebar-default">
-    <div class="iq-sidebar-logo d-flex align-items-center">
+    <div class="iq-sidebar-logo d-flex align-items-center justify-content-center">
         @auth
             <a href="{{ auth()->user()->role_as == '1' ? route('admin.dashboard') : route('prof.dashboard') }}"
-                class="header-logo d-flex align-items-center">
-                <h2 class="text-primary mr-1">{{ Str::substr(config('app.name'), 0, 1) }}</h2>
-                <h4 class="logo-title light-logo">{{ config('app.name') }}</h4>
+                class="header-logo d-flex align-items-center justify-content-center">
+                <img src="{{ asset('logo.png') }}" style="height: 85px; width: 130px;" alt="Logo">
             </a>
         @endauth
         @guest
             <a href="#" class="header-logo d-flex align-items-center">
-                <h2 class="text-primary mr-1">{{ Str::substr(config('app.name'), 0, 1) }}</h2>
-                <h4 class="logo-title light-logo">{{ config('app.name') }}</h4>
+                <img src="{{ asset('logo.png') }}" style="height: 60px; width: 60px;" alt="Logo">
             </a>
         @endguest
         <div class="iq-menu-bt-sidebar ml-0">
@@ -32,6 +30,13 @@
                             <a href="{{ route('prof.course.index') }}">
                                 <i class="ri-book-open-fill"></i>
                                 <span class="ml-4">Cours</span>
+                            </a>
+                        </li>
+
+                        <li class="{{ request()->routeIs('prof.slider.*') ? 'active' : '' }}">
+                            <a href="{{ route('prof.slider.index') }}">
+                                <i class="ri-slideshow-2-fill"></i>
+                                <span class="ml-4">Slides</span>
                             </a>
                         </li>
                         <li class="{{ request()->routeIs('prof.examen.*') ? 'active' : '' }}">
@@ -216,7 +221,7 @@
                                     <a href="#" class="svg-icon btn-module-disabled">
                                         <i class="ml-2 ri-sound-module-fill"></i>
                                         <span class="ml-4">{{ $moduleCourse->name }}</span>
-                                        <i class="ri-alert-fill ml-2"></i>
+                                        <i class="ml-2 ri-error-warning-fill"></i>
                                     </a>
 
                                 </li>
@@ -253,7 +258,7 @@
                         @endphp
                         @if ($count_modules == $completed_modules)
                             <li class="{{ request()->routeIs('student.examen') ? 'active' : '' }}">
-                                <a href="{{ route('student.examen', $course->copy_link) }}" class="svg-icon">
+                                <a href="{{ ! request()->routeIs('student.examen') ? route('student.examen', $course->copy_link) : '#'}}" class="svg-icon">
                                     <i class="ml-2 ri-honour-fill"></i>
                                     <span class="ml-4">Passer l'examen</span>
                                 </a>

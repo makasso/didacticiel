@@ -83,17 +83,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-2">
-                                                    @if ($slider->sliderVideos)
-                                                        <div class="row">
+                                                    @if (count($slider->sliderVideos) > 0)
+                                                        <div class="row parent-video-full">
                                                             @foreach ($slider->sliderVideos as $videos)
                                                                 <div class="col-md-2"
                                                                     class="embed-responsive embed-responsive-16by9">
-                                                                    <video width="320" height="240" autoplay muted>
-                                                                        <source src="{{ asset($videos->videos) }}">
-                                                                    </video>
+                                                                    <a href="{{url($videos->videos)}}" class="video-full">
+                                                                        <video href="{{url($videos->videos)}}"  width="320" height="240" autoplay muted>
+                                                                            <source src="{{url($videos->videos)}}">
+                                                                        </video>
+                                                                    </a>
                                                                     <a href="{{ url('admin/slider-videos/' . $videos->id . '/delete') }}"
                                                                         class="d-block">Supprimer</a>
                                                                 </div>
+                                                                <div class="px-5 mx-5"></div>
                                                             @endforeach
                                                         </div>
                                                     @else
@@ -112,13 +115,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-2">
-                                                    @if ($slider->sliderImages)
-                                                        <div class="row">
+                                                    @if (count($slider->sliderImages) > 0)
+                                                        <div class="row parent-img-full">
                                                             @foreach ($slider->sliderImages as $image)
                                                                 <div class="col-md-2">
-                                                                    <img src="{{ asset($image->image) }}"
-                                                                        style="width: 80px; height: 80px;"
-                                                                        class="me-4 border" alt="Img">
+                                                                    <a href="{{ asset($image->image) }}" class="">
+                                                                        <img src="{{ asset($image->image) }}" href="{{ asset($image->image) }}"
+                                                                             style="width: 80px; height: 80px; cursor: pointer;"
+                                                                             class="me-4 border img-full" alt="Img">
+                                                                    </a>
                                                                     <a href="{{ url('admin/slider-image/' . $image->id . '/delete') }}"
                                                                         class="d-block">Supprimer</a>
                                                                 </div>
@@ -142,3 +147,26 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $(".parent-img-full").magnificPopup({
+                delegate: 'img',
+                type: 'image',
+                gallery: {enabled: true},
+                zoom: {enabled: true}
+            });
+
+            $(".parent-video-full").magnificPopup({
+                delegate: 'video',
+                type: 'iframe',
+                gallery: {enabled: true},
+                zoom: {enabled: true}
+            });
+        });
+
+        const images = document.querySelectorAll('.img-full');
+        console.log(images);
+    </script>
+@endpush

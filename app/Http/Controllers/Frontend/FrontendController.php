@@ -90,6 +90,8 @@ class FrontendController extends Controller
             ->where('user_course.copy_link', $copy_link)
             ->first();
 
+        $module_id = Module::where('course_id', $course->id)->first()->id;
+
         if (!StudentModule::where('student_id', Auth::id())->first()) {
             foreach ($course->modulesCourses as $module) {
                 StudentModule::create([
@@ -116,22 +118,21 @@ class FrontendController extends Controller
 
         $completion_percentage = $completed_modules > 0 ? ($completed_modules * 100) / $count_modules : 0;
 
-        $slider = Slider::select(['sliders.*'])
+        $slider = Slider::select(['sliders.*'])->with(['sliderImages', 'sliderVideos'])
             ->join('modules', 'modules.id', 'sliders.module_id')
             ->join('courses', 'modules.course_id', '=', 'courses.id')
             ->join('user_course', 'courses.id', '=', 'user_course.course_id')
-            ->where(['sliders.is_introduction' => 1, 'user_course.copy_link' => $copy_link])
-            ->get();
+            ->where([['user_course.copy_link', $copy_link], ['is_introduction', 1], ['sliders.module_id', $module_id]])
+            ->first();
 
-        if (count($slider) == 0) {
+        if (is_null($slider)) {
             $slider = Slider::select(['sliders.*'])
-            ->join('modules', 'modules.id', 'sliders.module_id')
-            ->join('courses', 'modules.course_id', '=', 'courses.id')
-            ->join('user_course', 'courses.id', '=', 'user_course.course_id')
-            ->where(['user_course.copy_link' => $copy_link])
-            ->oldest()
-            ->take(1);
-        }    
+                ->join('modules', 'modules.id', 'sliders.module_id')
+                ->join('courses', 'modules.course_id', '=', 'courses.id')
+                ->join('user_course', 'courses.id', '=', 'user_course.course_id')
+                ->where([['user_course.copy_link', $copy_link], ['sliders.module_id', $module_id]])
+                ->first();
+        }
 
         if ($course) {
             return view('frontend.course.index', compact('course', 'student_modules', 'completion_percentage', 'count_modules', 'completed_modules', 'slider'));
@@ -254,7 +255,7 @@ class FrontendController extends Controller
             $examen = Examen::where('course_id', $course->id)->pluck('id')->random();
         } else {
             return redirect()->back()->withToastError('Pas encore d\'examen pour ce cours!');
-        }    
+        }
                if (
             ExamensAttempt::join('examens', 'examens_attempt.examen_id', 'examens.id')
                 ->join('courses', 'examens.course_id', 'courses.id')

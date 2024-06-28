@@ -32,10 +32,7 @@
                                                 <label for="name">Cours</label>
                                                 <input disabled type="text" class="form-control" value="{{ $certificate->examen->coursesExamens->name }}">
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="name">Professeur</label>
-                                                <input disabled type="text" class="form-control" value="{{ $certificate->examen->coursesExamens->user->name }}">
-                                            </div>
+                                           
                                             <div class="form-group col-md-6">
                                                 <label for="name">Date de délivrance</label>
                                                 <input disabled type="text" class="form-control" value="{{ $certificate->created_at->format('Y-m-d') }}">

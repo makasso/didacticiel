@@ -46,10 +46,10 @@
                                                     data-toggle="modal" data-target="#seeCoursesModal"
                                                     style="text-decoration: none">Afficher Cours</a>
                                             </td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href="{{ route('admin.prof.edit', $user) }}"
                                                     class="btn btn-success mr-1">Modifier</a>
-                                                <a href="{{ route('admin.prof.show', $user) }}" class="btn btn-secondary mr-1">Afficher</a>    
+                                                <a href="{{ route('admin.prof.show', $user) }}" class="btn btn-secondary mr-1">Afficher</a>
                                                 <a href="{{ route('admin.prof.destroy', $user) }}"
                                                     data-confirm-delete="true" class="btn btn-danger">Supprimer</a>
                                             </td>
@@ -142,7 +142,7 @@
 
                             });
                             setTimeout(() => {
-                                location.reload();  
+                                location.reload();
                             }, 3000);
                         } else {
                             Toast.fire({

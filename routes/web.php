@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ExamenController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Frontend\AuthStudenController;
 use App\Http\Controllers\Frontend\AuthStudentController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -27,12 +28,18 @@ Route::controller(App\Http\Controllers\Login\LoginUserController::class)->group(
 });
 
 Route::get('/', function () {
-    redirect('/admin/dashboard');
-})->middleware(['auth', 'isAdmin']);
+    if (auth()->user()->role_as == '0') {
+        return redirect('/prof/dashboard');
+    }
+    return redirect('/admin/dashboard');
+})->middleware(['auth']);
 
 Route::get('/home', function () {
-    redirect('/admin/dashboard');
-})->middleware(['auth', 'isAdmin']);
+    if (auth()->user()->role_as == '0') {
+        return redirect('/prof/dashboard');
+    }
+    return redirect('/admin/dashboard');
+})->middleware(['auth']);
 
 Route::prefix('admin')->middleware(['isAdmin', 'auth'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('admin.dashboard');
@@ -238,4 +245,9 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/login-student', [AuthStudentController::class, 'LoginStudent'])->name('login-student-post');
     Route::get('/verify-login/{token}', [AuthStudentController::class, 'verifyLogin'])->name('verify-login');
     Route::get('/get-student-name', [AuthStudentController::class, 'getNameByEmail'])->name('student.get-name');
+
+    Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPassword'])->name('forget.password.get');
+    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPassword'])->name('forget.password.post');
+    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPassword'])->name('reset.password.get');
+    Route::post('reset-password/{token}', [ForgotPasswordController::class, 'submitResetPassword'])->name('reset.password.post');
 });

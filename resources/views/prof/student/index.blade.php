@@ -12,8 +12,12 @@
                         <div class="header-title">
                             <h4 class="card-title">Liste des étudiants</h4>
                         </div>
-                        <a href="{{ route('prof.course.index') }}"
+                            <div class="btn-group">
+                                <a href="{{ route('prof.course.index') }}"
                             class="btn btn-primary float-end">Retour</a>
+                            <a href="{{ route('prof.course.students.csv', $course_id) }}"
+                            class="btn btn-secondary float-end">Exporter (CSV)</a>
+                            </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -22,7 +26,9 @@
                                     <tr class="ligth">
                                         <th>Nom</th>
                                         <th>Prénom</th>
-                                        <th>Progression</th>
+                                        <th>Adresse Email</th>
+                                        <th>Date de complétion</th>
+                                        <th>Statut</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,6 +40,8 @@
                                             <td>
                                                 {{ $student->student->lastname }}
                                             </td>
+                                            <td>{{$student->student->email}}</td>
+                                            <td>{{ $student->student->created_at->format('d-m-Y') }}</td>
                                             @if ($student->is_completed == 1)
                                             <td class="text-success">Terminé</td>
                                             @else

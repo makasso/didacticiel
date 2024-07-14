@@ -194,6 +194,7 @@ Route::prefix('prof')
             Route::get('/examen', 'indexExamen')->name('prof.examen.index');
             Route::get('/examen/{examen_id}', 'showExamen')->name('prof.examen.show');
             Route::get('/course/{course_id}/students', 'students')->name('prof.course.students');
+            Route::get('/course/{course_id}/students/export-csv', 'exportCSV')->name('prof.course.students.csv');
 
             Route::get('/qna-exam', 'getExamen')->name('prof.qna.index');
 

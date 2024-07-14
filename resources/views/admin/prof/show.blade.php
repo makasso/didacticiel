@@ -44,7 +44,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="category_id">Société</label>
                                             <input disabled type="text"
-                                                value="{{ $user->company->name ?? 'Aucune société' }}" class="form-control">
+                                                value="{{ $user->companyUser->name ?? 'Aucune société' }}" class="form-control">
                                         </div>
                                     </div>
                                 </div>

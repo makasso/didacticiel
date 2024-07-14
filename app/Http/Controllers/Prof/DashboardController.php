@@ -141,4 +141,45 @@ class DashboardController extends Controller
 
         return view('prof.student.index', compact('students', 'course_id'));
     }
+
+    public function exportCSV(int $course_id)
+    {
+        $fileName = 'étudiants.csv';
+        $students = ExamensAttempt::with(['student', 'examen'])
+            ->join('examens', 'examens_attempt.examen_id', 'examens.id')
+            ->join('courses', 'examens.course_id', 'courses.id')
+            ->where('status', 'is_completed')
+            ->where('courses.id', $course_id)
+            ->get();
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('Nom', 'Prénom', 'Email', 'Date de complétion', 'Statut');
+
+        $callback = function() use($students, $columns) {
+            $file = fopen('php://output', 'w');
+            fputs($file, chr(0xEF). chr(0xBB) . chr(0xBF));
+            fputcsv($file, $columns);
+
+            foreach ($students as $student) {
+                $row['Nom']    = $student->student->lastname;
+                $row['Prénom']    = $student->student->firstname;
+                $row['Email']  = $student->student->email;
+                $row['Date de complétion']  = $student->student->created_at->format('d-m-Y');
+                $row['Statut']  = $student->is_completed == 1 ? 'Terminé' : 'En cours';
+
+                fputcsv($file, array($row['Nom'], $row['Prénom'], $row['Email'], $row['Date de complétion'], $row['Statut']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
